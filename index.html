@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Pawon Mbah Gito | Warung Tradisional Indonesia</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEF7E8;
+            color: #3E2A1F;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, .logo, .nav-links a, .hero h1, .section-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        :root {
+            --brown-dark: #5A3E2B;
+            --brown-wood: #8B5A2B;
+            --terracotta: #C17A4B;
+            --cream: #FEF3E2;
+            --golden: #E6B17E;
+            --shadow: rgba(0,0,0,0.08);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(254, 243, 226, 0.96);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--brown-dark);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-img {
+            height: 45px;
+            width: auto;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--terracotta);
+        }
+
+        .logo span {
+            color: var(--terracotta);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--brown-dark);
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--terracotta);
+        }
+
+        .lang-toggle {
+            background: var(--brown-wood);
+            border: none;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .lang-toggle:hover {
+            background: var(--terracotta);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1603366615917-1fa6cb6c4e3b?q=80&w=2070&auto=format') center/cover no-repeat;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.25s ease;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--terracotta);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #a55d34;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--brown-dark);
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .section-title:after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background: var(--terracotta);
+            display: block;
+            margin: 12px auto 0;
+            border-radius: 4px;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: #e9dccc;
+            border: none;
+            padding: 10px 28px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+            color: #4a2f1b;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--brown-wood);
+            color: white;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 30px rgba(0,0,0,0.12);
+        }
+
+        /* Styling untuk gambar placeholder - src dikosongkan */
+        .menu-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0e6d6;
+            display: block;
+        }
+
+        /* Placeholder visual ketika src kosong */
+        .menu-card img[src=""],
+        .menu-card img:not([src]) {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="%23c17a4b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5" fill="%23c17a4b"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60px;
+            background-color: #f5ede2;
+        }
+
+        .card-content {
+            padding: 18px;
+        }
+
+        .menu-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .menu-desc {
+            font-size: 0.85rem;
+            color: #6b4c34;
+            margin: 8px 0;
+            line-height: 1.4;
+        }
+        
+        .menu-price {
+            font-weight: 800;
+            color: var(--terracotta);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .package-badge {
+            background: var(--golden);
+            color: #4a2f1b;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .reservation-section {
+            background: #F6ECD8;
+            padding: 70px 0;
+        }
+
+        .reserve-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .form-box {
+            flex: 1.2;
+            background: white;
+            padding: 30px;
+            border-radius: 32px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        }
+
+        .info-box {
+            flex: 0.9;
+            background: white;
+            padding: 30px;
+            border-radius: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0cdb5;
+            border-radius: 50px;
+            font-family: inherit;
+            background: #fffaf2;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 60px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            margin-top: 18px;
+            width: 100%;
+            justify-content: center;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #1da15a;
+        }
+
+        .hours p {
+            margin: 12px 0;
+        }
+        
+        .info-icon {
+            margin-right: 8px;
+            color: var(--terracotta);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin: 40px 0;
+        }
+
+        .review-card {
+            background: white;
+            padding: 22px;
+            border-radius: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .stars i {
+            color: #f5b342;
+            margin-right: 2px;
+        }
+
+        .review-name {
+            font-weight: 700;
+            margin-top: 12px;
+        }
+        
+        .address-detail {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 8px;
+            color: #4a3927;
+        }
+
+        .map-container {
+            margin: 40px 0;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+        }
+        
+        .map-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--terracotta);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .map-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #2E241D;
+            color: #e7dac5;
+            text-align: center;
+            padding: 28px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 780px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .btn-group {
+                gap: 12px;
+            }
+        }
+        
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        section {
+            animation: fadeUp 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-container">
+        <div class="logo">
+            <i class="fas fa-utensils"></i> 
+            Pawon <span>Mbah Gito</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" data-i18n="nav_home">Home</a></li>
+            <li><a href="#menu" data-i18n="nav_menu">Menu</a></li>
+            <li><a href="#reservation" data-i18n="nav_reserve">Reserve</a></li>
+            <li><a href="#reviews" data-i18n="nav_reviews">Reviews</a></li>
+        </ul>
+        <button class="lang-toggle" id="langToggleBtn">🇮🇩 Bahasa</button>
+    </div>
+</nav>
+
+<main>
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1 data-i18n="hero_title">Warung Tradisional <br> Rasa Kampung Halaman</h1>
+            <p data-i18n="hero_desc">Pawon Mbah Gito adalah rumah untuk pulang, mengulang kembali memori masa kecil dirumah kakek yang ayem tentrem penuh kehangatan & dekapan nasehat bijak berbalut kasih sayang.</p>
+            <div class="btn-group">
+                <a href="#menu" class="btn btn-primary" data-i18n="hero_btn_menu">View Menu</a>
+                <a href="#reservation" class="btn btn-outline" data-i18n="hero_btn_reserve">Reserve Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="container" style="padding: 70px 0;">
+        <h2 class="section-title" data-i18n="menu_title">Our Signature Menu</h2>
+        <!-- Fitur pemisahan: Makanan Berat, Snack/Cemilan, Wedangan, KopiTeh, Dessert -->
+        <div class="category-tabs" id="categoryTabs">
+            <button class="cat-btn active" data-cat="all" data-i18n="cat_all">All</button>
+            <button class="cat-btn" data-cat="makanan-berat" data-i18n="cat_makanan_berat">Makanan Berat</button>
+            <button class="cat-btn" data-cat="snack" data-i18n="cat_snack">Snack / Cemilan</button>
+            <button class="cat-btn" data-cat="wedangan" data-i18n="cat_wedangan">Wedangan</button>
+            <button class="cat-btn" data-cat="kopi-teh" data-i18n="cat_kopiteh">Kopi & Teh</button>
+            <button class="cat-btn" data-cat="dessert" data-i18n="cat_dessert">Dessert</button>
+        </div>
+        <div class="menu-grid" id="menuGrid"></div>
+    </section>
+
+    <section id="reservation" class="reservation-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="reserve_title">Reserve a Table</h2>
+            <div class="reserve-grid">
+                <div class="form-box">
+                    <form id="reserveForm">
+                        <div class="form-group"><input type="text" id="resName" placeholder="Your Name" data-i18n-placeholder="form_name" required></div>
+                        <div class="form-group"><input type="tel" id="resPhone" placeholder="Phone Number" data-i18n-placeholder="form_phone" required></div>
+                        <div class="form-group"><input type="datetime-local" id="resDateTime" required></div>
+                        <div class="form-group"><input type="number" id="resGuests" placeholder="Number of Guests" min="1" data-i18n-placeholder="form_guests" required></div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="form_submit">Request Reservation</button>
+                    </form>
+                    <a id="whatsappBtn" class="whatsapp-btn" href="#" target="_blank"><i class="fab fa-whatsapp"></i> <span data-i18n="wa_btn">Chat via WhatsApp</span></a>
+                </div>
+                <div class="info-box">
+                    <h3><i class="fas fa-clock info-icon"></i> <span data-i18n="hours_title">Jam Buka</span></h3>
+                    <div class="hours">
+                        <p><strong><i class="fas fa-calendar-week info-icon"></i> Weekdays (Senin-Jum'at)</strong><br> 07.00 AM - 22.00 PM</p>
+                        <p><strong><i class="fas fa-calendar-weekend info-icon"></i> Weekend (Sabtu-Minggu)</strong><br> 07.00 AM - 21.00 PM</p>
+                        <hr style="margin: 15px 0; border-color: #e0cdb5;">
+                        <p><strong><i class="fas fa-map-marker-alt info-icon"></i> <span data-i18n="location_title">Alamat</span></strong><br>
+                        <span class="address-detail">Jl. Pasir Luhur Jl. Mendiro Raya, RT.3/ RW26, Area Sawah, Sukoharjo, Kec. Ngaglik, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55581</span></p>
+                        <p><strong><i class="fas fa-phone-alt info-icon"></i> Reservasi:</strong><br>
+                        <a href="https://wa.me/message/A3ZVWCNGCVPHM1" target="_blank" style="color: #25D366; text-decoration: none; font-weight: bold;">+62 821-3489-7557</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="container" style="padding: 60px 0;">
+        <h2 class="section-title" data-i18n="reviews_title">Customer Reviews</h2>
+        <div class="reviews-grid" id="reviewsContainer"></div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3952.7338257452857!2d110.386212!3d-7.805203!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5787bd5b4bc7%3A0xb8f5b7d7b3d1e8a6!2sPawon%20Mbah%20Gito!5e0!3m2!1sid!2sid!4v1712654321000!5m2!1sid!2sid" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+            <a href="https://maps.app.goo.gl/Yy2TehBqVMWR1Ub2A" target="_blank" class="map-link" data-i18n="open_map">📍 Buka Google Maps untuk petunjuk arah → Open Google Maps for directions →</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 Pawon Mbah Gito — Rasa Tradisi, Hangatnya Keluarga | Maturnuwun</p>
+</footer>
+
+<script>
+    // ================= MENU LENGKAP (berdasarkan PDF + pemisahan Makanan Berat & Snack) =================
+    // SEMUA GAMBAR DI SET src = "" (KOSONG) agar user bisa mengisi sendiri nantinya
+    const menuItems = [
+        // WEDANGAN (minuman herbal tradisional)
+        { id: 1, name: "Wedang Mbah Gito", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling, kayu manis, gula batu & gula aren", price: 25000, category: "wedangan", img: "https://drive.google.com/file/d/1zutuqYvVOqSBxxgvBHQkhdREmZK_oa3T/view?usp=drive_link" },
+        { id: 2, name: "Wedang Mbah Uti", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling & gula batu", price: 25000, category: "wedangan", img: "" },
+        { id: 3, name: "Beras Kencur", desc: "Kencur tradisional khas Pawon Mbah Gito", price: 18000, category: "wedangan", img: "" },
+        { id: 4, name: "Wedang Jahe", desc: "Jahe asli hangat", price: 17000, category: "wedangan", img: "" },
+        { id: 5, name: "Wedang Sereh", desc: "Sereh segar", price: 9000, category: "wedangan", img: "" },
+        { id: 6, name: "Wedang Jahe Sereh", desc: "Paduan jahe & sereh", price: 18000, category: "wedangan", img: "" },
+        { id: 7, name: "Wedang Susu Jahe", desc: "Jahe dan SKM creamy", price: 18000, category: "wedangan", img: "" },
+        { id: 8, name: "Wedang Kenangan (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "" },
+        { id: 9, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
+        { id: 10, name: "Jeruk Nipis Ndeso", desc: "Jeruk nipis asli", price: 13000, category: "wedangan", img: "" },
+        // KOPI & TEH
+        { id: 11, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
+        { id: 12, name: "Teh Tubruk", desc: "Teh kampung asli", price: 15000, category: "kopi-teh", img: "" },
+        { id: 13, name: "Teh Sere", desc: "Teh dengan sereh (Panas 16k / Es 17k)", price: 16000, category: "kopi-teh", img: "" },
+        { id: 14, name: "Teh Jahe", desc: "Teh jahe hangat", price: 16000, category: "kopi-teh", img: "" },
+        { id: 15, name: "Teh Tarik", desc: "Teh tarik panas / es", price: 22000, category: "kopi-teh", img: "" },
+        { id: 16, name: "Kopi Ndeso", desc: "Kopi tubruk, gula batu/gula cair (Es)", price: 19000, category: "kopi-teh", img: "" },
+        { id: 17, name: "Kopi Susu Mbah Gito", desc: "Kopi tubruk, SKM, gula aren", price: 20000, category: "kopi-teh", img: "" },
+        { id: 18, name: "Kopi Susu Ndeso", desc: "Kopi tubruk, SKM, gula batu", price: 20000, category: "kopi-teh", img: "" },
+        { id: 19, name: "Vanilla Latte", desc: "Smooth vanilla latte", price: 32000, category: "kopi-teh", img: "" },
+        { id: 20, name: "Caramel Macchiato", desc: "Caramel macchiato", price: 32000, category: "kopi-teh", img: "" },
+        { id: 21, name: "Vietnam Drip", desc: "Vietnam drip coffee", price: 28000, category: "kopi-teh", img: "" },
+        { id: 22, name: "V60 Manual Brew", desc: "Pilihan Beans: Aceh Gayo, Halu Banana, Flores Bajawa, Bali, Merapi, Semendo", price: 27000, category: "kopi-teh", img: "" },
+        // MAKANAN BERAT (Nasi, Bakmi, Kwetiau, Rawon, Ayam Kampung, Sop, Spaghetti, Grilled Chicken, dll)
+        { id: 23, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "" },
+        { id: 24, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "" },
+        { id: 25, name: "Ayam Bakar Simbah", desc: "Nasi Putih, Ayam kampung, Lalapan, Oseng sayur, Sambal bawang", price: 55000, category: "makanan-berat", img: "" },
+        { id: 26, name: "Wagyu Slice Sambal Matah", desc: "Nasi putih, Daging Wagyu, Oseng Sayur, Telur Ceplok, Sambal", price: 57000, category: "makanan-berat", img: "" },
+        { id: 27, name: "Sop Ayam Kampung Ndeso", desc: "Ayam Kampung, Wortel, Kembang kol, Makaroni, Jamur, Keripik Kentang", price: 48000, category: "makanan-berat", img: "" },
+        { id: 28, name: "Bakmi Jowo Godog", desc: "Bakmi, Ayam Merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
+        { id: 29, name: "Bakmi Jowo Goreng", desc: "Bakmi goreng dengan ayam merah, telur bebek", price: 33000, category: "makanan-berat", img: "" },
+        { id: 30, name: "Mie Lethek Godhog/Goreng", desc: "Ayam merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
+        { id: 31, name: "Kwetiauw Goreng", desc: "Bakso Ikan, Potongan Ayam, Sayuran, Telur, Kerupuk Udang", price: 34000, category: "makanan-berat", img: "" },
+        { id: 32, name: "Nasi Goreng Kampung", desc: "Nasi Putih, Potongan Ayam, Telur, Telur Ceplok, Kerupuk Udang", price: 32000, category: "makanan-berat", img: "" },
+        { id: 33, name: "Nasi Goreng Bebek Cabe Ijo", desc: "Nasi putih, bebek suwir, telur ceplok", price: 36000, category: "makanan-berat", img: "" },
+        { id: 34, name: "Bebek Sambel Tempong", desc: "Nasi Putih, Bebek Goreng, Tempe Goreng, Sambel Tempong & Matah", price: 44000, category: "makanan-berat", img: "" },
+        { id: 35, name: "Grilled Chicken", desc: "Ayam Panggang, Kentang, Mushroom Sauce, Sayuran", price: 53000, category: "makanan-berat", img: "" },
+        { id: 36, name: "Mbah Gito Jenang", desc: "Kuliner Tradisional dengan cita rasa khas Pawon Mbah Gito", price: 13000, category: "makanan-berat", img: "" },
+        // SNACK / CEMILAN (Pisang Goreng, Mendoan, Roti Bakar, Dimsum, French Fries, Bakwan, Tahu Tuna, Pisang Bakar, Donat, dll)
+        { id: 37, name: "Bakwan Jagung", desc: "Bakwan jagung renyah", price: 18000, category: "snack", img: "" },
+        { id: 38, name: "Tahu Tuna", desc: "Tahu isi tuna", price: 24000, category: "snack", img: "" },
+        { id: 39, name: "Pisang Goreng", desc: "Pisang goreng tradisional", price: 18000, category: "snack", img: "" },
+        { id: 40, name: "Mendoan", desc: "Tempe mendoan khas", price: 17000, category: "snack", img: "" },
+        { id: 41, name: "Pisang Bakar Coklat Keju", desc: "Pisang bakar topping coklat keju", price: 21000, category: "snack", img: "" },
+        { id: 42, name: "Pisang Bakar Ori", desc: "Pisang bakar original", price: 16000, category: "snack", img: "" },
+        { id: 43, name: "Roti Bakar Hazelnut", desc: "Roti bakar hazelnut", price: 35000, category: "snack", img: "" },
+        { id: 44, name: "Roti Bakar Coklat Keju", desc: "Roti bakar coklat keju", price: 35000, category: "snack", img: "" },
+        { id: 45, name: "Dimsum", desc: "Dimsum ayam pilihan", price: 26000, category: "snack", img: "" },
+        { id: 46, name: "Spring Roll", desc: "Lumpia gurih", price: 24000, category: "snack", img: "" },
+        { id: 47, name: "French Fries", desc: "Kentang goreng crispy", price: 21000, category: "snack", img: "" },
+        { id: 48, name: "Donat", desc: "Topping gula halus", price: 32000, category: "snack", img: "" },
+        { id: 49, name: "Telo Mekrok", desc: "Ubi jalar goreng", price: 17000, category: "snack", img: "" },
+        { id: 50, name: "Ubi Lumer", desc: "Ubi lembut", price: 16000, category: "snack", img: "" },
+        // DESSERT (minuman manis dan cake)
+        { id: 51, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "dessert", img: "" },
+        { id: 52, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "dessert", img: "" },
+        { id: 53, name: "Teh Leci", desc: "Teh segar dengan leci", price: 25000, category: "dessert", img: "" },
+        { id: 54, name: "Roembulan", desc: "Minuman segar spesial", price: 26000, category: "dessert", img: "" },
+        { id: 55, name: "Telang Fresh", desc: "Bunga Telang, Jeruk Nipis", price: 27000, category: "dessert", img: "" },
+        { id: 56, name: "Klepon Eco", desc: "Klepon, Gula aren, Fresh Milk", price: 29000, category: "dessert", img: "" },
+        { id: 57, name: "Matcha", desc: "Matcha, Fresh Milk", price: 31000, category: "dessert", img: "" },
+        { id: 58, name: "Blend Cookies", desc: "Cookies dan Fresh Milk", price: 32000, category: "dessert", img: "" },
+        { id: 59, name: "Signature Coklat", desc: "Coklat, Es Krim Vanilla dan Fresh Milk", price: 34000, category: "dessert", img: "" },
+        { id: 60, name: "Choco Truffle Cake", desc: "Cake coklat truffle", price: 38000, category: "dessert", img: "" },
+        { id: 61, name: "Red Velvet Cake", desc: "Red velvet lembut", price: 39000, category: "dessert", img: "" },
+        { id: 62, name: "Burnt Cheesecake", desc: "Cheese Cake burnt style", price: 47000, category: "dessert", img: "" }
+    ];
+
+    let activeCategory = "all";
+    let currentLang = 'en';
+
+    function renderMenuByCategory(category) {
+        const filtered = category === "all" ? menuItems : menuItems.filter(item => item.category === category);
+        const grid = document.getElementById("menuGrid");
+        grid.innerHTML = "";
+        filtered.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "menu-card";
+            // Menggunakan src="" (kosong) untuk semua gambar
+            card.innerHTML = `
+                <img src="" alt="${item.name}">
+                <div class="card-content">
+                    ${item.price >= 100000 ? '<div class="package-badge">Paket Keluarga</div>' : ''}
+                    <div class="menu-name">${item.name}</div>
+                    <div class="menu-desc">${item.desc}</div>
+                    <div class="menu-price">Rp ${item.price.toLocaleString()}</div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // Data ulasan bilingual
+    const reviewsData = {
+        en: [
+            { name: "Dewi S.", rating: 5, comment: "The Wedang Mbah Gito is amazing! Traditional herbs blend perfectly. Cozy atmosphere like grandma's home." },
+            { name: "Rizki F.", rating: 5, comment: "Best 'Ndeso' vibe in town! Rawon Iga is superb. Will come back with family." },
+            { name: "Sarah L.", rating: 5, comment: "Love the Pisang Bakar Coklat Keju and friendly service. Traditional Javanese hospitality." },
+            { name: "Agung P.", rating: 5, comment: "Klepon Eco is unique! The ambiance is peaceful, surrounded by rice fields." },
+            { name: "Lina W.", rating: 5, comment: "Excellent place for hangout. Burnt Cheesecake and Wedang Kenangan sharing are must try!" }
+        ],
+        id: [
+            { name: "Dewi S.", rating: 5, comment: "Wedang Mbah Gito nya enak banget! Rempahnya terasa hangat. Suasana adem kayak rumah nenek." },
+            { name: "Rizki F.", rating: 5, comment: "Ndeso banget tempatnya! Rawon Iga mantap juara. Bakal ajak keluarga lagi." },
+            { name: "Sarah L.", rating: 5, comment: "Pisang Bakar Coklat Kejunya enak, pelayanan ramah. Khas Jawa banget." },
+            { name: "Agung P.", rating: 5, comment: "Klepon Eco unik! Tempatnya asri di tengah sawah, bikin adem." },
+            { name: "Lina W.", rating: 5, comment: "Tempat nongkrong favorit. Burnt Cheesecake dan Wedang Kenangan wajib dicoba!" }
+        ]
+    };
+
+    function renderReviews() {
+        const container = document.getElementById("reviewsContainer");
+        if (!container) return;
+        container.innerHTML = "";
+        const currentReviews = reviewsData[currentLang] || reviewsData.en;
+        currentReviews.forEach(rev => {
+            const starsHtml = Array(5).fill().map((_, i) => `<i class="fa${i < rev.rating ? 's' : 'r'} fa-star"></i>`).join('');
+            const card = document.createElement("div");
+            card.className = "review-card";
+            card.innerHTML = `<div class="stars">${starsHtml}</div><p>"${rev.comment}"</p><div class="review-name">— ${rev.name}</div>`;
+            container.appendChild(card);
+        });
+    }
+
+    // Terjemahan untuk kategori tambahan
+    const translations = {
+        en: {
+            nav_home: "Home", nav_menu: "Menu", nav_reserve: "Reserve", nav_reviews: "Reviews",
+            hero_title: "Traditional Restaurant<br>Homeland Flavors",
+            hero_desc: "Pawon Mbah Gito is a home to return to, reliving childhood memories at grandpa's peaceful, warm house full of wisdom and love.",
+            hero_btn_menu: "View Menu", hero_btn_reserve: "Reserve Now",
+            menu_title: "Our Signature Menu", cat_all: "All", cat_wedangan: "Wedangan (Herbal Drinks)", cat_kopiteh: "Coffee & Tea", cat_makanan_berat: "Heavy Meals", cat_snack: "Snacks", cat_dessert: "Dessert",
+            reserve_title: "Reserve a Table", form_name: "Your Name", form_phone: "Phone Number", form_guests: "Number of Guests", form_submit: "Request Reservation",
+            wa_btn: "Chat via WhatsApp", hours_title: "Opening Hours", location_title: "Address",
+            reviews_title: "Customer Reviews", open_map: "📍 Open Google Maps for directions →"
+        },
+        id: {
+            nav_home: "Beranda", nav_menu: "Menu", nav_reserve: "Pesan", nav_reviews: "Ulasan",
+            hero_title: "Resto Ndeso<br>Rasa Kampung Halaman",
+            hero_desc: "Pawon Mbah Gito adalah rumah untuk pulang, mengulang kembali memori masa kecil dirumah kakek yang ayem tentrem penuh kehangatan & dekapan nasehat bijak berbalut kasih sayang.",
+            hero_btn_menu: "Lihat Menu", hero_btn_reserve: "Pesan Sekarang",
+            menu_title: "Menu Andalan Kami", cat_all: "Semua", cat_wedangan: "Wedangan", cat_kopiteh: "Kopi & Teh", cat_makanan_berat: "Makanan Berat", cat_snack: "Snack / Cemilan", cat_dessert: "Dessert",
+            reserve_title: "Pesan Meja", form_name: "Nama Anda", form_phone: "Nomor Telepon", form_guests: "Jumlah Tamu", form_submit: "Kirim Permintaan",
+            wa_btn: "Chat via WhatsApp", hours_title: "Jam Buka", location_title: "Alamat",
+            reviews_title: "Ulasan Pelanggan", open_map: "📍 Buka Google Maps untuk petunjuk arah →"
+        }
+    };
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang][key]) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    if (el.hasAttribute('data-i18n-placeholder')) {
+                        el.placeholder = translations[lang][key];
+                    }
+                } else {
+                    el.innerHTML = translations[lang][key];
+                }
+            }
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (translations[lang][key]) el.placeholder = translations[lang][key];
+        });
+        renderReviews();
+    }
+
+    function initCategories() {
+        const btns = document.querySelectorAll(".cat-btn");
+        btns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                btns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                activeCategory = btn.getAttribute("data-cat");
+                renderMenuByCategory(activeCategory);
+            });
+        });
+    }
+
+    // WhatsApp integration
+    const whatsappBtn = document.getElementById("whatsappBtn");
+    if (whatsappBtn) {
+        whatsappBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("resName")?.value || "Customer";
+            const phone = document.getElementById("resPhone")?.value || "";
+            const dateTime = document.getElementById("resDateTime")?.value;
+            const guests = document.getElementById("resGuests")?.value || "?";
+            let msg = `Halo Pawon Mbah Gito! Saya ingin reservasi.%0ANama: ${name}%0ATelp: ${phone}%0AJam & Tanggal: ${dateTime || "Tidak diisi"}%0AJumlah tamu: ${guests}`;
+            if(currentLang === 'en') {
+                msg = `Hello Pawon Mbah Gito! I'd like to make a reservation.%0AName: ${name}%0APhone: ${phone}%0ADate & Time: ${dateTime || "Not set"}%0AGuests: ${guests}`;
+            }
+            const waUrl = `https://wa.me/message/A3ZVWCNGCVPHM1?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank');
+        });
+    }
+
+    const reserveForm = document.getElementById("reserveForm");
+    if (reserveForm) {
+        reserveForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert(currentLang === 'en' ? "Reservation request sent! We'll contact you soon." : "Permintaan reservasi terkirim! Kami akan segera hubungi.");
+        });
+    }
+
+    const toggleBtn = document.getElementById("langToggleBtn");
+    if (toggleBtn) {
+        toggleBtn.addEventListener("click", () => {
+            const newLang = currentLang === 'en' ? 'id' : 'en';
+            setLanguage(newLang);
+            toggleBtn.innerHTML = newLang === 'en' ? '🇮🇩 Bahasa' : '🇬🇧 English';
+        });
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    function init() {
+        setLanguage('en');
+        renderMenuByCategory('all');
+        renderReviews();
+        initCategories();
+    }
+    init();
+</script>
+</body>
+</html>
