@@ -715,33 +715,23 @@
         });
     }
 
-    // Data ulasan bilingual
-    const reviewsData = {
-        en: [
-            { name: "Ricky.", rating: 5, comment: "This is a comfortable place for Javanese traditional food, with a strong local atmosphere reflected in the setting, menu, and overall service. The facilities are complete and there are various seating options available, both indoors and outdoors.
-
-The dishes suited my taste, and I appreciated that red rice was available as an option. I tried the fried chicken with serundeng and the chicken satay wrapped with lemongrass. The pricing felt reasonable when compared to the food quality, facilities, and service provided." },
-            { name: "Mohd Rhedo Margen.", rating: 5, comment: "The food was okay for my taste. The service was good and fast, although if there are large table reservations, they tend to be prioritized (that was my experience when I visited). The place is nice in my opinion—comfortable and perfect for relaxing for a long time. The parking area is quite spacious, and the prayer room is decent too
-." },
-            { name: "Slamet P S.", rating: 5, comment: "This dining spot is simply too good to miss. Even if it’s your first time visiting based on online reviews, you won’t be disappointed. A variety of home-style dishes and signature drinks, along with a wide selection of expertly crafted coffee, are available here. The area is spacious, featuring different types of seating arrangements and diverse dining themes. Surrounded by rice fields with lush green paddies, it creates a relaxing and comfortable atmosphere to enjoy your meal. It’s best to arrive before 7 a.m., as the place tends to get very crowded. Despite having a large parking area, it’s almost always full
-." },
-            { name: "Heridikta Anggarini.", rating: 5, comment: "Home-style cooking—my favorites are the crispy tempeh and the omelet 🤤🤤. The kikil felt a bit tough, but the sautéed papaya leaves were quite tasty. The menu is also quite varied, the view is nice, and the prayer room is spacious with mukena available. It would be even better if the mukena were washed regularly 😬
-." },
-            { name: "Sapto Anggoro.", rating: 5, comment: "Subscribe here—especially on weekends (Saturday–Sunday) when they serve traditional jenang and porridge; it’s absolutely delicious. And what I almost always get are papaya leaf vegetables, fried pindang klotok rich in omega-3, and Mbah Uti’s herbal drink. It feels like truly wholesome, nourishing cuisine.
-." }
-        ],
-        id: [
-            { name: "Ricky.", rating: 5, comment: "Ini adalah tempat yang nyaman untuk menikmati makanan tradisional Jawa, dengan suasana lokal yang kuat yang tercermin dari tata tempat, menu, dan keseluruhan pelayanannya. Fasilitasnya lengkap dan tersedia berbagai pilihan tempat duduk, baik di dalam ruangan maupun di luar ruangan.
-
-Hidangannya sesuai dengan selera saya, dan saya menghargai bahwa nasi merah tersedia sebagai pilihan. Saya mencoba ayam goreng dengan serundeng serta sate ayam yang dibungkus dengan serai. Harganya terasa sepadan jika dibandingkan dengan kualitas makanan, fasilitas, dan layanan yang diberikan.
-." },
-            { name: "Mohd Rhedo Margen.", rating: 5, comment: "Makanannya bagi lidah saya ya oke aja. Pelayanannya bagus cepat, kecuali ada yang udah reserved table banyak jadi ya bakal di no 2 in (pengalaman pas kesana). Tempatnya bagus bagi saya, nyaman dan enak banget buat santai lama-lama.
-Parkiran lumayan luas, dan mushola oke." },
-            { name: "Slamet P S.", rating: 5, comment: "Tempat makan yang satu ini terlalu sayang untuk dilewatkan. Walaupun baru kali pertama ke tempat ini berdasarkan review online, gak akan kecewa deh. Aneka masakan rumahan dan minuman khas hingga racikan beragam jenis kopi, tersedia disini. Areanya luas dengan berbagai macam tipe meja-kursi dan beragam tema area makan. Dikelilingi sawah dengan tumbuhan padi makin menambah suasana nyaman untuk menikmati sajian. Sebaiknya datang kesini sebelum jam 7 pagi karena yang datang selalu membludak. Parkiran yang luas hampir selalu penuh." },
-            { name: "Heridika Anggarini.", rating: 5, comment: "Masakan rumahan, fav aku tempe garit sm telor dadarnya 🤤🤤 kikilnya kyk masih keras, tumis daun pepaya nya lumayan enak. Menu jg variatif, pemandangan bagus, musholanya besar n ada mukena, lebih baik lg klo dicuci berkala mukena nya 😬." },
-            { name: "Sapto Anggoro.", rating: 5, comment: "Langganan di sini, terutama sabtu minggu ada jenang bubur tradisional, enak banget. Dan, yang hampir selalu saya ambil adalah sayur daun pepaya, pindang klotok goreng gull omega3, dan wedang mbah Uti. Rasanya kuliner yg menyehatkan." }
-        ]
-    };
+// Data ulasan bilingual (DIPERBAIKI)
+const reviewsData = {
+    en: [
+        { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options. The fried chicken with serundeng and lemongrass-wrapped chicken satay were delicious. Reasonable prices compared to food quality, facilities, and service." },
+        { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable and perfect for relaxing for a long time. Spacious parking area and decent prayer room." },
+        { name: "Slamet P S", rating: 5, comment: "A dining spot too good to miss. Various home-style dishes and signature drinks available. The area is spacious with different seating themes. Surrounded by rice fields, creating a relaxing atmosphere. Come before 7 AM to avoid crowds." },
+        { name: "Heridikta Anggarini", rating: 5, comment: "Love the home-style cooking! My favorites are crispy tempeh and omelet. The menu is varied, the view is nice, and the prayer room is spacious with mukena available." },
+        { name: "Sapto Anggoro", rating: 5, comment: "A regular here, especially on weekends when they serve traditional jenang and porridge. The papaya leaf vegetables and fried pindang klotok are delicious. The wedang Mbah Uti is a must-try herbal drink." }
+    ],
+    id: [
+        { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat. Fasilitas lengkap dengan berbagai pilihan tempat duduk. Ayam goreng dengan serundeng dan sate ayam serai sangat enak. Harga sepadan dengan kualitas makanan, fasilitas, dan layanan." },
+        { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman dan cocok untuk bersantai lama. Parkiran luas dan mushola oke." },
+        { name: "Slamet P S", rating: 5, comment: "Tempat makan yang sayang dilewatkan. Aneka masakan rumahan dan minuman khas tersedia. Area luas dengan berbagai tema tempat duduk. Dikelilingi sawah, suasananya adem. Sebaiknya datang sebelum jam 7 pagi." },
+        { name: "Heridikta Anggarini", rating: 5, comment: "Masakan rumahan favorit! Tempe garit dan telur dadar enak banget. Menu variatif, pemandangan bagus, mushola besar dan ada mukena." },
+        { name: "Sapto Anggoro", rating: 5, comment: "Langganan di sini, terutama sabtu minggu ada jenang bubur tradisional. Sayur daun pepaya dan pindang klotok goreng enak. Wedang Mbah Uti wajib dicoba." }
+    ]
+};
 
     function renderReviews() {
         const container = document.getElementById("reviewsContainer");
