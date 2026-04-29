@@ -69,11 +69,6 @@
             gap: 12px;
         }
         
-        .logo-img {
-            height: 45px;
-            width: auto;
-        }
-        
         .logo i {
             font-size: 2rem;
             color: var(--terracotta);
@@ -243,7 +238,6 @@
             box-shadow: 0 18px 30px rgba(0,0,0,0.12);
         }
 
-        /* Styling untuk gambar placeholder - src dikosongkan */
         .menu-card img {
             width: 100%;
             height: 200px;
@@ -252,13 +246,10 @@
             display: block;
         }
 
-        /* Placeholder visual ketika src kosong */
-        .menu-card img[src=""],
-        .menu-card img:not([src]) {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="%23c17a4b" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5" fill="%23c17a4b"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 60px;
+        /* Gambar error handler */
+        .menu-card img.error-img {
+            object-fit: contain;
+            padding: 20px;
             background-color: #f5ede2;
         }
 
@@ -455,6 +446,11 @@
         section {
             animation: fadeUp 0.5s ease-out;
         }
+
+        /* Loading indicator untuk gambar */
+        .img-loading {
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -489,7 +485,6 @@
 
     <section id="menu" class="container" style="padding: 70px 0;">
         <h2 class="section-title" data-i18n="menu_title">Our Signature Menu</h2>
-        <!-- Fitur pemisahan: Makanan Berat, Snack/Cemilan, Wedangan, KopiTeh, Dessert -->
         <div class="category-tabs" id="categoryTabs">
             <button class="cat-btn active" data-cat="all" data-i18n="cat_all">All</button>
             <button class="cat-btn" data-cat="makanan-berat" data-i18n="cat_makanan_berat">Makanan Berat</button>
@@ -538,7 +533,7 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3952.7338257452857!2d110.386212!3d-7.805203!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5787bd5b4bc7%3A0xb8f5b7d7b3d1e8a6!2sPawon%20Mbah%20Gito!5e0!3m2!1sid!2sid!4v1712654321000!5m2!1sid!2sid" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div style="text-align: center; margin-top: 10px;">
-            <a href="https://maps.app.goo.gl/Yy2TehBqVMWR1Ub2A" target="_blank" class="map-link" data-i18n="open_map">📍 Buka Google Maps untuk petunjuk arah → Open Google Maps for directions →</a>
+            <a href="https://maps.app.goo.gl/Yy2TehBqVMWR1Ub2A" target="_blank" class="map-link" data-i18n="open_map">📍 Buka Google Maps untuk petunjuk arah →</a>
         </div>
     </section>
 </main>
@@ -548,12 +543,67 @@
 </footer>
 
 <script>
-    // ================= MENU LENGKAP (berdasarkan PDF + pemisahan Makanan Berat & Snack) =================
-    // SEMUA GAMBAR DI SET src = "" (KOSONG) agar user bisa mengisi sendiri nantinya
+    // ================= FUNGSI KONVERSI GOOGLE DRIVE LINK =================
+    // Fungsi untuk mengkonversi link Google Drive ke format langsung (direct download)
+    function convertGoogleDriveLink(url) {
+        if (!url || url === "") return "";
+        
+        // Deteksi jika itu link Google Drive
+        if (url.includes('drive.google.com')) {
+            // Extract file ID dari berbagai format link Google Drive
+            let fileId = null;
+            
+            // Format 1: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+            let match = url.match(/\/file\/d\/([^\/]+)/);
+            if (match) fileId = match[1];
+            
+            // Format 2: https://drive.google.com/open?id=FILE_ID
+            if (!fileId) {
+                match = url.match(/id=([^&]+)/);
+                if (match) fileId = match[1];
+            }
+            
+            // Format 3: https://drive.google.com/uc?export=view&id=FILE_ID
+            if (!fileId) {
+                match = url.match(/[&?]id=([^&]+)/);
+                if (match) fileId = match[1];
+            }
+            
+            if (fileId) {
+                // Gunakan format direct download Google Drive
+                return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
+                // Alternatif: https://drive.google.com/uc?export=view&id=${fileId}
+            }
+        }
+        
+        return url;
+    }
+
+    // Fungsi untuk handle error gambar
+    function handleImageError(img) {
+        img.style.display = 'none';
+        // Tambahkan placeholder icon
+        const parent = img.parentElement;
+        const placeholder = document.createElement('div');
+        placeholder.style.cssText = 'width:100%;height:200px;background:#f5ede2;display:flex;align-items:center;justify-content:center;color:#c17a4b;font-size:14px;';
+        placeholder.innerHTML = '<i class="fas fa-image" style="font-size:40px;opacity:0.5"></i><br><span style="font-size:12px">Gambar tidak tersedia</span>';
+        if (parent && img.parentNode) {
+            img.parentNode.replaceChild(placeholder, img);
+        }
+    }
+
+    // ================= DATA MENU LENGKAP =================
+    // 💡 CARA MEMASUKKAN LINK GAMBAR:
+    // 1. Upload gambar ke Google Drive
+    // 2. Set izin menjadi "Anyone with the link can view"
+    // 3. Copy link share (contoh: https://drive.google.com/file/d/XXXXXXX/view?usp=sharing)
+    // 4. Paste link tersebut ke kolom "img" di bawah ini
+    // 5. Simpan file, gambar akan otomatis muncul!
+    
     const menuItems = [
         // WEDANGAN (minuman herbal tradisional)
         { id: 1, name: "Wedang Mbah Gito", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling, kayu manis, gula batu & gula aren", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/wrQNdq44/Wedang-Mbah-Gito.jpg" },
-        { id: 2, name: "Wedang Mbah Uti", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling & gula batu", price: 25000, category: "wedangan", img: "https://drive.google.com/file/d/1zutuqYvVOqSBxxgvBHQkhdREmZK_oa3T/view?usp=sharing" },
+        { id: 2, name: "Wedang Mbah Uti", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling & gula batu", price: 25000, category: "wedangan", img: "" },
         { id: 3, name: "Beras Kencur", desc: "Kencur tradisional khas Pawon Mbah Gito", price: 18000, category: "wedangan", img: "" },
         { id: 4, name: "Wedang Jahe", desc: "Jahe asli hangat", price: 17000, category: "wedangan", img: "" },
         { id: 5, name: "Wedang Sereh", desc: "Sereh segar", price: 9000, category: "wedangan", img: "" },
@@ -562,6 +612,7 @@
         { id: 8, name: "Wedang Kenangan (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "" },
         { id: 9, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
         { id: 10, name: "Jeruk Nipis Ndeso", desc: "Jeruk nipis asli", price: 13000, category: "wedangan", img: "" },
+        
         // KOPI & TEH
         { id: 11, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
         { id: 12, name: "Teh Tubruk", desc: "Teh kampung asli", price: 15000, category: "kopi-teh", img: "" },
@@ -575,7 +626,8 @@
         { id: 20, name: "Caramel Macchiato", desc: "Caramel macchiato", price: 32000, category: "kopi-teh", img: "" },
         { id: 21, name: "Vietnam Drip", desc: "Vietnam drip coffee", price: 28000, category: "kopi-teh", img: "" },
         { id: 22, name: "V60 Manual Brew", desc: "Pilihan Beans: Aceh Gayo, Halu Banana, Flores Bajawa, Bali, Merapi, Semendo", price: 27000, category: "kopi-teh", img: "" },
-        // MAKANAN BERAT (Nasi, Bakmi, Kwetiau, Rawon, Ayam Kampung, Sop, Spaghetti, Grilled Chicken, dll)
+        
+        // MAKANAN BERAT
         { id: 23, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "" },
         { id: 24, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "" },
         { id: 25, name: "Ayam Bakar Simbah", desc: "Nasi Putih, Ayam kampung, Lalapan, Oseng sayur, Sambal bawang", price: 55000, category: "makanan-berat", img: "" },
@@ -590,7 +642,8 @@
         { id: 34, name: "Bebek Sambel Tempong", desc: "Nasi Putih, Bebek Goreng, Tempe Goreng, Sambel Tempong & Matah", price: 44000, category: "makanan-berat", img: "" },
         { id: 35, name: "Grilled Chicken", desc: "Ayam Panggang, Kentang, Mushroom Sauce, Sayuran", price: 53000, category: "makanan-berat", img: "" },
         { id: 36, name: "Mbah Gito Jenang", desc: "Kuliner Tradisional dengan cita rasa khas Pawon Mbah Gito", price: 13000, category: "makanan-berat", img: "" },
-        // SNACK / CEMILAN (Pisang Goreng, Mendoan, Roti Bakar, Dimsum, French Fries, Bakwan, Tahu Tuna, Pisang Bakar, Donat, dll)
+        
+        // SNACK / CEMILAN
         { id: 37, name: "Bakwan Jagung", desc: "Bakwan jagung renyah", price: 18000, category: "snack", img: "" },
         { id: 38, name: "Tahu Tuna", desc: "Tahu isi tuna", price: 24000, category: "snack", img: "" },
         { id: 39, name: "Pisang Goreng", desc: "Pisang goreng tradisional", price: 18000, category: "snack", img: "" },
@@ -605,7 +658,8 @@
         { id: 48, name: "Donat", desc: "Topping gula halus", price: 32000, category: "snack", img: "" },
         { id: 49, name: "Telo Mekrok", desc: "Ubi jalar goreng", price: 17000, category: "snack", img: "" },
         { id: 50, name: "Ubi Lumer", desc: "Ubi lembut", price: 16000, category: "snack", img: "" },
-        // DESSERT (minuman manis dan cake)
+        
+        // DESSERT
         { id: 51, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "dessert", img: "" },
         { id: 52, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "dessert", img: "" },
         { id: 53, name: "Teh Leci", desc: "Teh segar dengan leci", price: 25000, category: "dessert", img: "" },
@@ -623,16 +677,31 @@
     let activeCategory = "all";
     let currentLang = 'en';
 
+    // Fungsi render menu dengan gambar (sudah diperbaiki)
     function renderMenuByCategory(category) {
         const filtered = category === "all" ? menuItems : menuItems.filter(item => item.category === category);
         const grid = document.getElementById("menuGrid");
         grid.innerHTML = "";
+        
         filtered.forEach(item => {
             const card = document.createElement("div");
             card.className = "menu-card";
-            // Menggunakan src="" (kosong) untuk semua gambar
+            
+            // 🔥 PERBAIKAN UTAMA: Gunakan link gambar dari data & konversi Google Drive
+            let imgUrl = item.img || "";
+            
+            // Konversi link Google Drive ke format yang bisa ditampilkan
+            if (imgUrl && imgUrl.includes('drive.google.com')) {
+                imgUrl = convertGoogleDriveLink(imgUrl);
+            }
+            
+            // Buat elemen gambar dengan error handling
+            const imgHtml = imgUrl ? 
+                `<img src="${imgUrl}" alt="${item.name}" onerror="handleImageError(this)">` : 
+                `<div style="width:100%;height:200px;background:#f5ede2;display:flex;align-items:center;justify-content:center;color:#c17a4b;"><i class="fas fa-utensils" style="font-size:40px;opacity:0.5"></i></div>`;
+            
             card.innerHTML = `
-                <img src="" alt="${item.name}">
+                ${imgHtml}
                 <div class="card-content">
                     ${item.price >= 100000 ? '<div class="package-badge">Paket Keluarga</div>' : ''}
                     <div class="menu-name">${item.name}</div>
@@ -676,15 +745,17 @@
         });
     }
 
-    // Terjemahan untuk kategori tambahan
+    // Terjemahan
     const translations = {
         en: {
             nav_home: "Home", nav_menu: "Menu", nav_reserve: "Reserve", nav_reviews: "Reviews",
             hero_title: "Traditional Restaurant<br>Homeland Flavors",
             hero_desc: "Pawon Mbah Gito is a home to return to, reliving childhood memories at grandpa's peaceful, warm house full of wisdom and love.",
             hero_btn_menu: "View Menu", hero_btn_reserve: "Reserve Now",
-            menu_title: "Our Signature Menu", cat_all: "All", cat_wedangan: "Wedangan (Herbal Drinks)", cat_kopiteh: "Coffee & Tea", cat_makanan_berat: "Heavy Meals", cat_snack: "Snacks", cat_dessert: "Dessert",
-            reserve_title: "Reserve a Table", form_name: "Your Name", form_phone: "Phone Number", form_guests: "Number of Guests", form_submit: "Request Reservation",
+            menu_title: "Our Signature Menu", cat_all: "All", cat_wedangan: "Wedangan", cat_kopiteh: "Coffee & Tea", 
+            cat_makanan_berat: "Heavy Meals", cat_snack: "Snacks", cat_dessert: "Dessert",
+            reserve_title: "Reserve a Table", form_name: "Your Name", form_phone: "Phone Number", 
+            form_guests: "Number of Guests", form_submit: "Request Reservation",
             wa_btn: "Chat via WhatsApp", hours_title: "Opening Hours", location_title: "Address",
             reviews_title: "Customer Reviews", open_map: "📍 Open Google Maps for directions →"
         },
@@ -693,8 +764,10 @@
             hero_title: "Resto Ndeso<br>Rasa Kampung Halaman",
             hero_desc: "Pawon Mbah Gito adalah rumah untuk pulang, mengulang kembali memori masa kecil dirumah kakek yang ayem tentrem penuh kehangatan & dekapan nasehat bijak berbalut kasih sayang.",
             hero_btn_menu: "Lihat Menu", hero_btn_reserve: "Pesan Sekarang",
-            menu_title: "Menu Andalan Kami", cat_all: "Semua", cat_wedangan: "Wedangan", cat_kopiteh: "Kopi & Teh", cat_makanan_berat: "Makanan Berat", cat_snack: "Snack / Cemilan", cat_dessert: "Dessert",
-            reserve_title: "Pesan Meja", form_name: "Nama Anda", form_phone: "Nomor Telepon", form_guests: "Jumlah Tamu", form_submit: "Kirim Permintaan",
+            menu_title: "Menu Andalan Kami", cat_all: "Semua", cat_wedangan: "Wedangan", cat_kopiteh: "Kopi & Teh",
+            cat_makanan_berat: "Makanan Berat", cat_snack: "Snack / Cemilan", cat_dessert: "Dessert",
+            reserve_title: "Pesan Meja", form_name: "Nama Anda", form_phone: "Nomor Telepon",
+            form_guests: "Jumlah Tamu", form_submit: "Kirim Permintaan",
             wa_btn: "Chat via WhatsApp", hours_title: "Jam Buka", location_title: "Alamat",
             reviews_title: "Ulasan Pelanggan", open_map: "📍 Buka Google Maps untuk petunjuk arah →"
         }
@@ -783,6 +856,7 @@
         renderReviews();
         initCategories();
     }
+    
     init();
 </script>
 </body>
