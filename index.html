@@ -548,7 +548,7 @@
                                 <input type="number" id="resGuests" placeholder="Number of Guests" min="1" data-i18n-placeholder="form_guests" required>
                             </div>
                             <div class="form-group">
-                                <select id="resVehicle" data-i18n-option-vehicle="vehicle_label">
+                                <select id="resVehicle">
                                     <option value="" disabled selected data-i18n="vehicle_placeholder">-- Select Vehicle --</option>
                                     <option value="Motor" data-i18n="vehicle_motor">Motorcycle</option>
                                     <option value="Mobil" data-i18n="vehicle_car">Car</option>
@@ -638,8 +638,17 @@
         }
     }
 
-    // ================= DATA MENU =================
+    // ================= DATA MENU LENGKAP (DIPERBAIKI KATEGORINYA) =================
+    // KATEGORI:
+    // - wedangan: minuman herbal tradisional
+    // - kopi-teh: kopi & teh
+    // - minuman: minuman segar (dawet, es teler, matcha, dll)
+    // - makanan-berat: makanan utama
+    // - snack: camilan ringan
+    // - cake-pastry: kue dan pastry
+    
     const menuItems = [
+        // WEDANGAN (minuman herbal tradisional)
         { id: 1, name: "Wedang Mbah Gito", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling, kayu manis, gula batu & gula aren", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/Y4RXbBKF/Wedang-Mbah-Gito.png" },
         { id: 2, name: "Wedang Mbah Uti", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling & gula batu", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/gbCJ3rSd/Wedang-Mbah-Uti.png" },
         { id: 3, name: "Beras Kencur", desc: "Kencur tradisional khas Pawon Mbah Gito", price: 18000, category: "wedangan", img: "" },
@@ -650,16 +659,79 @@
         { id: 8, name: "Wedang Kenangan (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/LX3w1bbF/Wedang-Kenangan.png" },
         { id: 9, name: "Wedang Temu Kangen (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/spPGVwnc/Wedang-Temu-Kangen.png" },
         { id: 10, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
-        { id: 11, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
-        { id: 12, name: "Kopi Ndeso", desc: "Kopi tubruk, gula batu/gula cair (Es)", price: 19000, category: "kopi-teh", img: "" },
-        { id: 13, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "https://i.ibb.co.com/MkS2n4tQ/Rawon-Iga.png" },
-        { id: 14, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "https://i.ibb.co.com/B2KJhrR4/Ayam-Kampung.png" },
-        { id: 15, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "minuman", img: "https://i.ibb.co.com/NdLctrhp/Dawet-Mbah-Uti.png" },
-        { id: 16, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "minuman", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" },
-        { id: 17, name: "Matcha", desc: "Matcha, Fresh Milk", price: 31000, category: "minuman", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
-        { id: 18, name: "Red Velvet Cheese Cake", desc: "Red velvet lembut berpadu dengan keju", price: 40000, category: "cake-pastry", img: "" },
-        { id: 19, name: "Choco Truffle Cake", desc: "Cake coklat truffle", price: 38000, category: "cake-pastry", img: "" },
-        { id: 20, name: "Burnt Cheese Cake", desc: "Cheese Cake burnt style", price: 47000, category: "cake-pastry", img: "" }
+        { id: 11, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
+        { id: 12, name: "Jeruk Nipis Ndeso", desc: "Jeruk nipis asli", price: 13000, category: "wedangan", img: "" },
+        
+        // KOPI & TEH
+        { id: 13, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
+        { id: 14, name: "Teh Tubruk", desc: "Teh kampung asli", price: 15000, category: "kopi-teh", img: "" },
+        { id: 15, name: "Teh Sere", desc: "Teh dengan sereh (Panas 16k / Es 17k)", price: 16000, category: "kopi-teh", img: "" },
+        { id: 16, name: "Teh Jahe", desc: "Teh jahe hangat", price: 16000, category: "kopi-teh", img: "" },
+        { id: 17, name: "Teh Tarik", desc: "Teh tarik panas / es", price: 22000, category: "kopi-teh", img: "" },
+        { id: 18, name: "Kopi Ndeso", desc: "Kopi tubruk, gula batu/gula cair (Es)", price: 19000, category: "kopi-teh", img: "" },
+        { id: 19, name: "Kopi Susu Mbah Gito", desc: "Kopi tubruk, SKM, gula aren", price: 20000, category: "kopi-teh", img: "" },
+        { id: 20, name: "Kopi Susu Ndeso", desc: "Kopi tubruk, SKM, gula batu", price: 20000, category: "kopi-teh", img: "" },
+        { id: 21, name: "Vanilla Latte", desc: "Smooth vanilla latte", price: 32000, category: "kopi-teh", img: "" },
+        { id: 22, name: "Caramel Macchiato", desc: "Caramel macchiato", price: 32000, category: "kopi-teh", img: "" },
+        { id: 23, name: "Vietnam Drip", desc: "Vietnam drip coffee", price: 28000, category: "kopi-teh", img: "" },
+        { id: 24, name: "V60 Manual Brew", desc: "Pilihan Beans: Aceh Gayo, Halu Banana, Flores Bajawa, Bali, Merapi, Semendo", price: 27000, category: "kopi-teh", img: "" },
+  
+        // MINUMAN (Minuman Segar/Dessert Drinks)
+        { id: 25, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "minuman", img: "https://i.ibb.co.com/NdLctrhp/Dawet-Mbah-Uti.png" },
+        { id: 26, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "minuman", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" },
+        { id: 27, name: "Teh Leci", desc: "Teh segar dengan leci", price: 25000, category: "minuman", img: "" },
+        { id: 28, name: "Roembulan", desc: "Minuman segar spesial", price: 26000, category: "minuman", img: "https://i.ibb.co.com/Z6qhxryj/Rembulan.png" },
+        { id: 29, name: "Telang Fresh", desc: "Bunga Telang, Jeruk Nipis", price: 27000, category: "minuman", img: "" },
+        { id: 30, name: "Klepon Eco", desc: "Klepon, Gula aren, Fresh Milk", price: 29000, category: "minuman", img: "https://i.ibb.co.com/YwBG3Vv/Klepon.png" },
+        { id: 31, name: "Matcha", desc: "Matcha, Fresh Milk", price: 31000, category: "minuman", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
+        { id: 32, name: "Blend Cookies", desc: "Cookies dan Fresh Milk", price: 32000, category: "minuman", img: "" },
+        { id: 33, name: "Signature Coklat", desc: "Coklat, Es Krim Vanilla dan Fresh Milk", price: 34000, category: "minuman", img: "" },
+        { id: 71, name: "Mochacino", desc: "Mochacino yang lembut", price: 34000, category: "minuman", img: "" },
+
+        // MAKANAN BERAT
+        { id: 34, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "https://i.ibb.co.com/MkS2n4tQ/Rawon-Iga.png" },
+        { id: 35, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "https://i.ibb.co.com/B2KJhrR4/Ayam-Kampung.png" },
+        { id: 36, name: "Ayam Bakar Simbah", desc: "Nasi Putih, Ayam kampung, Lalapan, Oseng sayur, Sambal bawang", price: 55000, category: "makanan-berat", img: "" },
+        { id: 37, name: "Wagyu Slice Sambal Matah", desc: "Nasi putih, Daging Wagyu, Oseng Sayur, Telur Ceplok, Sambal", price: 57000, category: "makanan-berat", img: "" },
+        { id: 38, name: "Sop Ayam Kampung Ndeso", desc: "Ayam Kampung, Wortel, Kembang kol, Makaroni, Jamur, Keripik Kentang", price: 48000, category: "makanan-berat", img: "" },
+        { id: 39, name: "Bakmi Jowo Godog", desc: "Bakmi, Ayam Merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
+        { id: 40, name: "Bakmi Jowo Goreng", desc: "Bakmi goreng dengan ayam merah, telur bebek", price: 33000, category: "makanan-berat", img: "" },
+        { id: 41, name: "Mie Lethek Godhog/Goreng", desc: "Ayam merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
+        { id: 42, name: "Kwetiauw Goreng", desc: "Bakso Ikan, Potongan Ayam, Sayuran, Telur, Kerupuk Udang", price: 34000, category: "makanan-berat", img: "https://i.ibb.co.com/PX52Yt8/Kwetiau-Goreng.png" },
+        { id: 43, name: "Nasi Goreng Kampung", desc: "Nasi Putih, Potongan Ayam, Telur, Telur Ceplok, Kerupuk Udang", price: 32000, category: "makanan-berat", img: "" },
+        { id: 44, name: "Nasi Goreng Bebek Cabe Ijo", desc: "Nasi putih, bebek suwir, telur ceplok", price: 36000, category: "makanan-berat", img: "" },
+        { id: 45, name: "Bebek Sambel Tempong", desc: "Nasi Putih, Bebek Goreng, Tempe Goreng, Sambel Tempong & Matah", price: 44000, category: "makanan-berat", img: "" },
+        { id: 46, name: "Grilled Chicken", desc: "Ayam Panggang, Kentang, Mushroom Sauce, Sayuran", price: 53000, category: "makanan-berat", img: "" },
+        { id: 47, name: "Mbah Gito Jenang", desc: "Kuliner Tradisional dengan cita rasa khas Pawon Mbah Gito", price: 13000, category: "makanan-berat", img: "" },
+        
+        // SNACK / CEMILAN
+        { id: 48, name: "Bakwan Jagung", desc: "Bakwan jagung renyah", price: 18000, category: "snack", img: "" },
+        { id: 49, name: "Tahu Tuna", desc: "Tahu isi tuna", price: 24000, category: "snack", img: "" },
+        { id: 50, name: "Pisang Goreng", desc: "Pisang goreng tradisional", price: 18000, category: "snack", img: "" },
+        { id: 51, name: "Mendoan", desc: "Tempe mendoan khas", price: 17000, category: "snack", img: "" },
+        { id: 52, name: "Pisang Bakar Coklat Keju", desc: "Pisang bakar topping coklat keju", price: 21000, category: "snack", img: "" },
+        { id: 53, name: "Pisang Bakar Ori", desc: "Pisang bakar original", price: 16000, category: "snack", img: "" },
+        { id: 54, name: "Roti Bakar Hazelnut", desc: "Roti bakar hazelnut", price: 35000, category: "snack", img: "" },
+        { id: 55, name: "Roti Bakar Coklat Keju", desc: "Roti bakar coklat keju", price: 35000, category: "snack", img: "" },
+        { id: 56, name: "Dimsum", desc: "Dimsum ayam pilihan", price: 26000, category: "snack", img: "" },
+        { id: 57, name: "Spring Roll", desc: "Lumpia gurih", price: 24000, category: "snack", img: "" },
+        { id: 58, name: "French Fries", desc: "Kentang goreng crispy", price: 21000, category: "snack", img: "" },
+        { id: 59, name: "Donat", desc: "Topping gula halus", price: 32000, category: "snack", img: "" },
+        { id: 60, name: "Telo Mekrok", desc: "Ubi jalar goreng", price: 17000, category: "snack", img: "" },
+        { id: 61, name: "Ubi Lumer", desc: "Ubi lembut", price: 16000, category: "snack", img: "" },
+        
+        // CAKE & PASTRY (KATEGORI KHUSUS)
+        { id: 62, name: "Red Velvet Cheese Cake", desc: "Red velvet lembut berpadu dengan keju", price: 40000, category: "cake-pastry", img: "" },
+        { id: 63, name: "Choco Truffle Cake", desc: "Cake coklat truffle", price: 38000, category: "cake-pastry", img: "" },
+        { id: 64, name: "Red Velvet Cake", desc: "Red velvet lembut", price: 39000, category: "cake-pastry", img: "" },
+        { id: 65, name: "Burnt Cheese Cake", desc: "Cheese Cake burnt style", price: 47000, category: "cake-pastry", img: "" },
+        { id: 66, name: "Blueberry Cheese Cake", desc: "Blueberry lembut berpadu dengan lembutnya keju", price: 48000, category: "cake-pastry", img: "" },
+        { id: 67, name: "Tiramisu", desc: "Tiramisu yang lembut dan manis", price: 40000, category: "cake-pastry", img: "https://i.ibb.co.com/YwBG3Vv/Klepon.png" },
+        { id: 68, name: "Chocolate Cheese Cake", desc: "Cokelat lembut dan keju lumer", price: 40000, category: "cake-pastry", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
+        { id: 69, name: "Strawberry Cheese Cake", desc: "Strawberry dan keju berpadu", price: 38000, category: "cake-pastry", img: "" },
+        { id: 70, name: "All Croissant", desc: "Renyah di bagian luar dan toping yang beragam", price: 33000, category: "cake-pastry", img: "" },
+        { id: 72, name: "Rainbow Cake", desc: "Cantik warna warni cake yang lembut", price: 39000, category: "cake-pastry", img: "" },
+        { id: 73, name: "All Macaron", desc: "Crunchy diluar lembut di dalam", price: 21000, category: "cake-pastry", img: "" }
     ];
 
     let activeCategory = "all";
@@ -715,7 +787,7 @@
         });
     }
 
-    // Terjemahan dengan field baru
+    // Terjemahan
     const translations = {
         en: {
             nav_home: "Home", nav_menu: "Menu", nav_reserve: "Reserve", nav_reviews: "Reviews",
@@ -822,7 +894,7 @@
         renderReviews();
     }
 
-    // ========== FUNGSI KIRIM WA DENGAN FIELD BARU ==========
+    // ========== FUNGSI KIRIM WA ==========
     const WA_TARGET_NUMBER = "6282134897557";
     
     function showToast(message, isError = false) {
@@ -863,7 +935,6 @@
     }
 
     function sendToWhatsApp(name, phone, dateTime, guests, vehicle, eventType) {
-        // Validasi
         if (!name.trim()) {
             showToast(currentLang === 'en' ? "Please enter your name" : "Masukkan nama Anda", true);
             return false;
@@ -881,7 +952,6 @@
             return false;
         }
 
-        // Format datetime
         let formattedDateTime = dateTime;
         if (dateTime) {
             const dt = new Date(dateTime);
@@ -895,7 +965,6 @@
         const vehicleText = vehicle ? getVehicleText(vehicle, currentLang) : (currentLang === 'en' ? 'Not specified' : 'Tidak diisi');
         const eventText = eventType ? getEventText(eventType, currentLang) : (currentLang === 'en' ? 'Not specified' : 'Tidak diisi');
         
-        // PESAN DENGAN FORMAT BARU + FIELD KENDARAAN & ACARA
         let message = '';
         if (currentLang === 'en') {
             message = `🍽️ *RESERVATION REQUEST* 🍽️\n\n` +
@@ -923,7 +992,7 @@
         return true;
     }
 
-    // Event handler form dengan field baru
+    // Event handler form
     const reserveForm = document.getElementById("reserveForm");
     if (reserveForm) {
         reserveForm.addEventListener("submit", (e) => {
@@ -938,7 +1007,6 @@
         });
     }
 
-    // Tombol WhatsApp
     const whatsappDirectBtn = document.getElementById("whatsappBtn");
     if (whatsappDirectBtn) {
         whatsappDirectBtn.addEventListener("click", (e) => {
