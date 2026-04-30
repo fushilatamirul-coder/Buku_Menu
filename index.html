@@ -582,7 +582,7 @@
         }
     }
 
-    // ================= DATA MENU =================
+    // ================= DATA MENU LENGKAP (DIPERBAIKI) =================
     const menuItems = [
         // WEDANGAN (minuman herbal tradisional)
         { id: 1, name: "Wedang Mbah Gito", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling, kayu manis, gula batu & gula aren", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/Y4RXbBKF/Wedang-Mbah-Gito.png" },
@@ -612,7 +612,7 @@
         { id: 23, name: "Vietnam Drip", desc: "Vietnam drip coffee", price: 28000, category: "kopi-teh", img: "" },
         { id: 24, name: "V60 Manual Brew", desc: "Pilihan Beans: Aceh Gayo, Halu Banana, Flores Bajawa, Bali, Merapi, Semendo", price: 27000, category: "kopi-teh", img: "" },
   
-        // MINUMAN
+        // DESSERT & MINUMAN MANIS
         { id: 25, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "dessert", img: "https://i.ibb.co.com/NdLctrhp/Dawet-Mbah-Uti.png" },
         { id: 26, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "dessert", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" },
         { id: 27, name: "Teh Leci", desc: "Teh segar dengan leci", price: 25000, category: "dessert", img: "" },
@@ -655,11 +655,11 @@
         { id: 60, name: "Telo Mekrok", desc: "Ubi jalar goreng", price: 17000, category: "snack", img: "" },
         { id: 61, name: "Ubi Lumer", desc: "Ubi lembut", price: 16000, category: "snack", img: "" },
         
-        // CAKE & PASTRY
+        // CAKE & PASTRY (DESSERT)
         { id: 62, name: "Red Velvet Cheese Cake", desc: "Red velvet lembut berpadu dengan keju", price: 40000, category: "dessert", img: "" },
         { id: 63, name: "Choco Truffle Cake", desc: "Cake coklat truffle", price: 38000, category: "dessert", img: "" },
         { id: 64, name: "Red Velvet Cake", desc: "Red velvet lembut", price: 39000, category: "dessert", img: "" },
-        { id: 65, name: "Burnt Cheese Cake", desc: "Cheese Cake burnt style", price: 47000, category: "dessert", img: "" }
+        { id: 65, name: "Burnt Cheese Cake", desc: "Cheese Cake burnt style", price: 47000, category: "dessert", img: "" },
         { id: 66, name: "Blueberry Cheese Cake", desc: "Blueberry lembut berpadu dengan lembutnya keju", price: 48000, category: "dessert", img: "" },
         { id: 67, name: "Tiramisu", desc: "Tiramisu yang lembut dan manis", price: 40000, category: "dessert", img: "https://i.ibb.co.com/YwBG3Vv/Klepon.png" },
         { id: 68, name: "Chocolate Cheese Cake", desc: "Cokelat lembut dan keju lumer", price: 40000, category: "dessert", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
@@ -667,8 +667,7 @@
         { id: 70, name: "All Croisant", desc: "Renyah di bagian luar dan toping yang beragam", price: 33000, category: "dessert", img: "" },
         { id: 71, name: "Mochacino", desc: "Mochacino yang lembut", price: 34000, category: "dessert", img: "" },
         { id: 72, name: "Rainbow Cake", desc: "cantik Warna warni cake yang lembut", price: 39000, category: "dessert", img: "" },
-        { id: 73, name: "All Macaron", desc: "Cruncy diluar lembut di dalam", price: 21000, category: "dessert", img: "" },
-
+        { id: 73, name: "All Macaron", desc: "Cruncy diluar lembut di dalam", price: 21000, category: "dessert", img: "" }
     ];
 
     let activeCategory = "all";
@@ -677,7 +676,14 @@
     function renderMenuByCategory(category) {
         const filtered = category === "all" ? menuItems : menuItems.filter(item => item.category === category);
         const grid = document.getElementById("menuGrid");
+        if (!grid) return;
         grid.innerHTML = "";
+        
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div style="text-align:center; grid-column:1/-1; padding:40px;">No items found in this category.</div>';
+            return;
+        }
+        
         filtered.forEach(item => {
             const card = document.createElement("div");
             card.className = "menu-card";
@@ -691,23 +697,24 @@
         });
     }
 
-    // Data ulasan bilingual (DIPERBAIKI)
+    // Data ulasan bilingual
     const reviewsData = {
-    en: [
-        { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options. The fried chicken with serundeng and lemongrass-wrapped chicken satay were delicious. Reasonable prices compared to food quality, facilities, and service." },
-        { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable and perfect for relaxing for a long time. Spacious parking area and decent prayer room." },
-        { name: "Slamet P S", rating: 5, comment: "A dining spot too good to miss. Various home-style dishes and signature drinks available. The area is spacious with different seating themes. Surrounded by rice fields, creating a relaxing atmosphere. Come before 7 AM to avoid crowds." },
-        { name: "Heridikta Anggarini", rating: 5, comment: "Love the home-style cooking! My favorites are crispy tempeh and omelet. The menu is varied, the view is nice, and the prayer room is spacious with mukena available." },
-        { name: "Sapto Anggoro", rating: 5, comment: "A regular here, especially on weekends when they serve traditional jenang and porridge. The papaya leaf vegetables and fried pindang klotok are delicious. The wedang Mbah Uti is a must-try herbal drink." }
-    ],
-    id: [
-        { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat. Fasilitas lengkap dengan berbagai pilihan tempat duduk. Ayam goreng dengan serundeng dan sate ayam serai sangat enak. Harga sepadan dengan kualitas makanan, fasilitas, dan layanan." },
-        { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman dan cocok untuk bersantai lama. Parkiran luas dan mushola oke." },
-        { name: "Slamet P S", rating: 5, comment: "Tempat makan yang sayang dilewatkan. Aneka masakan rumahan dan minuman khas tersedia. Area luas dengan berbagai tema tempat duduk. Dikelilingi sawah, suasananya adem. Sebaiknya datang sebelum jam 7 pagi." },
-        { name: "Heridikta Anggarini", rating: 5, comment: "Masakan rumahan favorit! Tempe garit dan telur dadar enak banget. Menu variatif, pemandangan bagus, mushola besar dan ada mukena." },
-        { name: "Sapto Anggoro", rating: 5, comment: "Langganan di sini, terutama sabtu minggu ada jenang bubur tradisional. Sayur daun pepaya dan pindang klotok goreng enak. Wedang Mbah Uti wajib dicoba." }
-    ]
-};
+        en: [
+            { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options. The fried chicken with serundeng and lemongrass-wrapped chicken satay were delicious. Reasonable prices compared to food quality, facilities, and service." },
+            { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable and perfect for relaxing for a long time. Spacious parking area and decent prayer room." },
+            { name: "Slamet P S", rating: 5, comment: "A dining spot too good to miss. Various home-style dishes and signature drinks available. The area is spacious with different seating themes. Surrounded by rice fields, creating a relaxing atmosphere. Come before 7 AM to avoid crowds." },
+            { name: "Heridikta Anggarini", rating: 5, comment: "Love the home-style cooking! My favorites are crispy tempeh and omelet. The menu is varied, the view is nice, and the prayer room is spacious with mukena available." },
+            { name: "Sapto Anggoro", rating: 5, comment: "A regular here, especially on weekends when they serve traditional jenang and porridge. The papaya leaf vegetables and fried pindang klotok are delicious. The wedang Mbah Uti is a must-try herbal drink." }
+        ],
+        id: [
+            { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat. Fasilitas lengkap dengan berbagai pilihan tempat duduk. Ayam goreng dengan serundeng dan sate ayam serai sangat enak. Harga sepadan dengan kualitas makanan, fasilitas, dan layanan." },
+            { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman dan cocok untuk bersantai lama. Parkiran luas dan mushola oke." },
+            { name: "Slamet P S", rating: 5, comment: "Tempat makan yang sayang dilewatkan. Aneka masakan rumahan dan minuman khas tersedia. Area luas dengan berbagai tema tempat duduk. Dikelilingi sawah, suasananya adem. Sebaiknya datang sebelum jam 7 pagi." },
+            { name: "Heridikta Anggarini", rating: 5, comment: "Masakan rumahan favorit! Tempe garit dan telur dadar enak banget. Menu variatif, pemandangan bagus, mushola besar dan ada mukena." },
+            { name: "Sapto Anggoro", rating: 5, comment: "Langganan di sini, terutama sabtu minggu ada jenang bubur tradisional. Sayur daun pepaya dan pindang klotok goreng enak. Wedang Mbah Uti wajib dicoba." }
+        ]
+    };
+    
     function renderReviews() {
         const container = document.getElementById("reviewsContainer");
         if (!container) return;
@@ -727,7 +734,7 @@
         en: {
             nav_home: "Home", nav_menu: "Menu", nav_reserve: "Reserve", nav_reviews: "Reviews",
             hero_title: "Traditional Restaurant<br>Homeland Flavors",
-            hero_desc: "Pawon Mbah Gito is a home to return to—a place to relive childhood memories at grandmother’s house, peaceful and serene, filled with warmth and affection.",
+            hero_desc: "Pawon Mbah Gito is a home to return to—a place to relive childhood memories at grandmother's house, peaceful and serene, filled with warmth and affection.",
             hero_btn_menu: "View Menu", hero_btn_reserve: "Reserve Now",
             menu_title: "Our Signature Menu", cat_all: "All", cat_wedangan: "Wedangan", cat_kopiteh: "Coffee & Tea", 
             cat_makanan_berat: "Heavy Meals", cat_snack: "Snacks", cat_dessert: "Dessert",
@@ -754,7 +761,7 @@
         currentLang = lang;
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if (translations[lang][key]) {
+            if (translations[lang] && translations[lang][key]) {
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     if (el.hasAttribute('data-i18n-placeholder')) el.placeholder = translations[lang][key];
                 } else el.innerHTML = translations[lang][key];
@@ -762,12 +769,12 @@
         });
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
-            if (translations[lang][key]) el.placeholder = translations[lang][key];
+            if (translations[lang] && translations[lang][key]) el.placeholder = translations[lang][key];
         });
         renderReviews();
     }
 
-    // ========== FUNGSI KIRIM WA DENGAN FORMAT BARU YANG RAPI ==========
+    // ========== FUNGSI KIRIM WA DENGAN FORMAT RAPI ==========
     const WA_TARGET_NUMBER = "6282134897557";
     
     function showToast(message, isError = false) {
@@ -779,7 +786,6 @@
         setTimeout(() => toast.classList.remove("show"), 3000);
     }
 
-    // Fungsi untuk memformat jumlah tamu (plural)
     function formatGuests(guests, lang) {
         if (lang === 'en') {
             return guests + (guests > 1 ? ' People' : ' Person');
@@ -789,7 +795,6 @@
     }
 
     function sendToWhatsApp(name, phone, dateTime, guests) {
-        // Validasi
         if (!name.trim()) {
             showToast(currentLang === 'en' ? "Please enter your name" : "Masukkan nama Anda", true);
             return false;
@@ -807,7 +812,6 @@
             return false;
         }
 
-        // Format datetime
         let formattedDateTime = dateTime;
         if (dateTime) {
             const dt = new Date(dateTime);
@@ -817,10 +821,8 @@
             });
         }
 
-        // Format jumlah tamu
         const guestText = formatGuests(guests, currentLang);
         
-        // PESAN DENGAN FORMAT BARU YANG LEBIH RAPI
         let message = '';
         if (currentLang === 'en') {
             message = `🍽️ *RESERVATION REQUEST* 🍽️\n\n` +
@@ -838,7 +840,6 @@
                       `Dikirim dari website Pawon Mbah Gito`;
         }
 
-        // Encode untuk URL
         const waUrl = `https://wa.me/${WA_TARGET_NUMBER}?text=${encodeURIComponent(message)}`;
         window.open(waUrl, '_blank');
         showToast(currentLang === 'en' ? "Opening WhatsApp... Please send the message" : "Membuka WhatsApp... Silakan kirim pesan");
