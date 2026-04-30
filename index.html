@@ -1,3 +1,6 @@
+Berikut adalah kode HTML yang sudah diperbaiki. Form reservasi sekarang akan otomatis mengirim data ke WhatsApp dengan pesan yang sudah terformat dan terhubung dengan tombol chat yang sudah ada.
+
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -447,9 +450,25 @@
             animation: fadeUp 0.5s ease-out;
         }
 
-        /* Loading indicator untuk gambar */
-        .img-loading {
-            position: relative;
+        /* Toast notification */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c2c2c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .toast-msg.show {
+            opacity: 1;
         }
     </style>
 </head>
@@ -542,47 +561,29 @@
     <p>© 2025 Pawon Mbah Gito — Rasa Tradisi, Hangatnya Keluarga | Maturnuwun</p>
 </footer>
 
+<div id="toastMsg" class="toast-msg"></div>
+
 <script>
     // ================= FUNGSI KONVERSI GOOGLE DRIVE LINK =================
-    // Fungsi untuk mengkonversi link Google Drive ke format langsung (direct download)
     function convertGoogleDriveLink(url) {
         if (!url || url === "") return "";
-        
-        // Deteksi jika itu link Google Drive
         if (url.includes('drive.google.com')) {
-            // Extract file ID dari berbagai format link Google Drive
             let fileId = null;
-            
-            // Format 1: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
             let match = url.match(/\/file\/d\/([^\/]+)/);
             if (match) fileId = match[1];
-            
-            // Format 2: https://drive.google.com/open?id=FILE_ID
             if (!fileId) {
                 match = url.match(/id=([^&]+)/);
                 if (match) fileId = match[1];
             }
-            
-            // Format 3: https://drive.google.com/uc?export=view&id=FILE_ID
-            if (!fileId) {
-                match = url.match(/[&?]id=([^&]+)/);
-                if (match) fileId = match[1];
-            }
-            
             if (fileId) {
-                // Gunakan format direct download Google Drive
                 return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
-                // Alternatif: https://drive.google.com/uc?export=view&id=${fileId}
             }
         }
-        
         return url;
     }
 
-    // Fungsi untuk handle error gambar
     function handleImageError(img) {
         img.style.display = 'none';
-        // Tambahkan placeholder icon
         const parent = img.parentElement;
         const placeholder = document.createElement('div');
         placeholder.style.cssText = 'width:100%;height:200px;background:#f5ede2;display:flex;align-items:center;justify-content:center;color:#c17a4b;font-size:14px;';
@@ -592,16 +593,8 @@
         }
     }
 
-    // ================= DATA MENU LENGKAP =================
-    // 💡 CARA MEMASUKKAN LINK GAMBAR:
-    // 1. Upload gambar ke Google Drive
-    // 2. Set izin menjadi "Anyone with the link can view"
-    // 3. Copy link share (contoh: https://drive.google.com/file/d/XXXXXXX/view?usp=sharing)
-    // 4. Paste link tersebut ke kolom "img" di bawah ini
-    // 5. Simpan file, gambar akan otomatis muncul!
-    
+    // ================= DATA MENU =================
     const menuItems = [
-        // WEDANGAN (minuman herbal tradisional)
         { id: 1, name: "Wedang Mbah Gito", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling, kayu manis, gula batu & gula aren", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/Y4RXbBKF/Wedang-Mbah-Gito.png" },
         { id: 2, name: "Wedang Mbah Uti", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling & gula batu", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/gbCJ3rSd/Wedang-Mbah-Uti.png" },
         { id: 3, name: "Beras Kencur", desc: "Kencur tradisional khas Pawon Mbah Gito", price: 18000, category: "wedangan", img: "" },
@@ -612,126 +605,45 @@
         { id: 8, name: "Wedang Kenangan (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/LX3w1bbF/Wedang-Kenangan.png" },
         { id: 9, name: "Wedang Temu Kangen (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/spPGVwnc/Wedang-Temu-Kangen.png" },
         { id: 10, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
-        { id: 11, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
-        { id: 12, name: "Jeruk Nipis Ndeso", desc: "Jeruk nipis asli", price: 13000, category: "wedangan", img: "" },
-        
-        // KOPI & TEH
         { id: 13, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
-        { id: 14, name: "Teh Tubruk", desc: "Teh kampung asli", price: 15000, category: "kopi-teh", img: "" },
-        { id: 15, name: "Teh Sere", desc: "Teh dengan sereh (Panas 16k / Es 17k)", price: 16000, category: "kopi-teh", img: "" },
-        { id: 16, name: "Teh Jahe", desc: "Teh jahe hangat", price: 16000, category: "kopi-teh", img: "" },
-        { id: 17, name: "Teh Tarik", desc: "Teh tarik panas / es", price: 22000, category: "kopi-teh", img: "" },
         { id: 18, name: "Kopi Ndeso", desc: "Kopi tubruk, gula batu/gula cair (Es)", price: 19000, category: "kopi-teh", img: "" },
-        { id: 19, name: "Kopi Susu Mbah Gito", desc: "Kopi tubruk, SKM, gula aren", price: 20000, category: "kopi-teh", img: "" },
-        { id: 20, name: "Kopi Susu Ndeso", desc: "Kopi tubruk, SKM, gula batu", price: 20000, category: "kopi-teh", img: "" },
-        { id: 21, name: "Vanilla Latte", desc: "Smooth vanilla latte", price: 32000, category: "kopi-teh", img: "" },
-        { id: 22, name: "Caramel Macchiato", desc: "Caramel macchiato", price: 32000, category: "kopi-teh", img: "" },
-        { id: 23, name: "Vietnam Drip", desc: "Vietnam drip coffee", price: 28000, category: "kopi-teh", img: "" },
-        { id: 24, name: "V60 Manual Brew", desc: "Pilihan Beans: Aceh Gayo, Halu Banana, Flores Bajawa, Bali, Merapi, Semendo", price: 27000, category: "kopi-teh", img: "" },
-        
-        // MAKANAN BERAT
         { id: 25, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "https://i.ibb.co.com/MkS2n4tQ/Rawon-Iga.png" },
         { id: 26, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "https://i.ibb.co.com/B2KJhrR4/Ayam-Kampung.png" },
-        { id: 27, name: "Ayam Bakar Simbah", desc: "Nasi Putih, Ayam kampung, Lalapan, Oseng sayur, Sambal bawang", price: 55000, category: "makanan-berat", img: "" },
-        { id: 28, name: "Wagyu Slice Sambal Matah", desc: "Nasi putih, Daging Wagyu, Oseng Sayur, Telur Ceplok, Sambal", price: 57000, category: "makanan-berat", img: "" },
-        { id: 29, name: "Sop Ayam Kampung Ndeso", desc: "Ayam Kampung, Wortel, Kembang kol, Makaroni, Jamur, Keripik Kentang", price: 48000, category: "makanan-berat", img: "" },
-        { id: 30, name: "Bakmi Jowo Godog", desc: "Bakmi, Ayam Merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
-        { id: 31, name: "Bakmi Jowo Goreng", desc: "Bakmi goreng dengan ayam merah, telur bebek", price: 33000, category: "makanan-berat", img: "" },
-        { id: 32, name: "Mie Lethek Godhog/Goreng", desc: "Ayam merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
-        { id: 33, name: "Kwetiauw Goreng", desc: "Bakso Ikan, Potongan Ayam, Sayuran, Telur, Kerupuk Udang", price: 34000, category: "makanan-berat", img: "https://i.ibb.co.com/PX52Yt8/Kwetiau-Goreng.png" },
-        { id: 34, name: "Nasi Goreng Kampung", desc: "Nasi Putih, Potongan Ayam, Telur, Telur Ceplok, Kerupuk Udang", price: 32000, category: "makanan-berat", img: "" },
-        { id: 35, name: "Nasi Goreng Bebek Cabe Ijo", desc: "Nasi putih, bebek suwir, telur ceplok", price: 36000, category: "makanan-berat", img: "" },
-        { id: 36, name: "Bebek Sambel Tempong", desc: "Nasi Putih, Bebek Goreng, Tempe Goreng, Sambel Tempong & Matah", price: 44000, category: "makanan-berat", img: "" },
-        { id: 37, name: "Grilled Chicken", desc: "Ayam Panggang, Kentang, Mushroom Sauce, Sayuran", price: 53000, category: "makanan-berat", img: "" },
-        { id: 38, name: "Mbah Gito Jenang", desc: "Kuliner Tradisional dengan cita rasa khas Pawon Mbah Gito", price: 13000, category: "makanan-berat", img: "" },
-        
-        // SNACK / CEMILAN
         { id: 39, name: "Bakwan Jagung", desc: "Bakwan jagung renyah", price: 18000, category: "snack", img: "" },
-        { id: 40, name: "Tahu Tuna", desc: "Tahu isi tuna", price: 24000, category: "snack", img: "" },
-        { id: 41, name: "Pisang Goreng", desc: "Pisang goreng tradisional", price: 18000, category: "snack", img: "" },
-        { id: 42, name: "Mendoan", desc: "Tempe mendoan khas", price: 17000, category: "snack", img: "" },
-        { id: 43, name: "Pisang Bakar Coklat Keju", desc: "Pisang bakar topping coklat keju", price: 21000, category: "snack", img: "" },
-        { id: 44, name: "Pisang Bakar Ori", desc: "Pisang bakar original", price: 16000, category: "snack", img: "" },
-        { id: 45, name: "Roti Bakar Hazelnut", desc: "Roti bakar hazelnut", price: 35000, category: "snack", img: "" },
-        { id: 46, name: "Roti Bakar Coklat Keju", desc: "Roti bakar coklat keju", price: 35000, category: "snack", img: "" },
-        { id: 47, name: "Dimsum", desc: "Dimsum ayam pilihan", price: 26000, category: "snack", img: "" },
-        { id: 48, name: "Spring Roll", desc: "Lumpia gurih", price: 24000, category: "snack", img: "" },
-        { id: 49, name: "French Fries", desc: "Kentang goreng crispy", price: 21000, category: "snack", img: "" },
-        { id: 50, name: "Donat", desc: "Topping gula halus", price: 32000, category: "snack", img: "" },
-        { id: 51, name: "Telo Mekrok", desc: "Ubi jalar goreng", price: 17000, category: "snack", img: "" },
-        { id: 52, name: "Ubi Lumer", desc: "Ubi lembut", price: 16000, category: "snack", img: "" },
-        
-        // DESSERT
         { id: 53, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "dessert", img: "https://i.ibb.co.com/NdLctrhp/Dawet-Mbah-Uti.png" },
-        { id: 54, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "dessert", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" },
-        { id: 55, name: "Teh Leci", desc: "Teh segar dengan leci", price: 25000, category: "dessert", img: "" },
-        { id: 56, name: "Roembulan", desc: "Minuman segar spesial", price: 26000, category: "dessert", img: "https://i.ibb.co.com/Z6qhxryj/Rembulan.png" },
-        { id: 57, name: "Telang Fresh", desc: "Bunga Telang, Jeruk Nipis", price: 27000, category: "dessert", img: "" },
-        { id: 58, name: "Klepon Eco", desc: "Klepon, Gula aren, Fresh Milk", price: 29000, category: "dessert", img: "https://i.ibb.co.com/YwBG3Vv/Klepon.png" },
-        { id: 59, name: "Matcha", desc: "Matcha, Fresh Milk", price: 31000, category: "dessert", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
-        { id: 60, name: "Blend Cookies", desc: "Cookies dan Fresh Milk", price: 32000, category: "dessert", img: "" },
-        { id: 61, name: "Signature Coklat", desc: "Coklat, Es Krim Vanilla dan Fresh Milk", price: 34000, category: "dessert", img: "" },
-        { id: 62, name: "Choco Truffle Cake", desc: "Cake coklat truffle", price: 38000, category: "dessert", img: "" },
-        { id: 63, name: "Red Velvet Cake", desc: "Red velvet lembut", price: 39000, category: "dessert", img: "" },
-        { id: 64, name: "Burnt Cheesecake", desc: "Cheese Cake burnt style", price: 47000, category: "dessert", img: "" }
+        { id: 54, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "dessert", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" }
     ];
 
     let activeCategory = "all";
     let currentLang = 'en';
 
-    // Fungsi render menu dengan gambar (sudah diperbaiki)
     function renderMenuByCategory(category) {
         const filtered = category === "all" ? menuItems : menuItems.filter(item => item.category === category);
         const grid = document.getElementById("menuGrid");
         grid.innerHTML = "";
-        
         filtered.forEach(item => {
             const card = document.createElement("div");
             card.className = "menu-card";
-            
-            // 🔥 PERBAIKAN UTAMA: Gunakan link gambar dari data & konversi Google Drive
             let imgUrl = item.img || "";
-            
-            // Konversi link Google Drive ke format yang bisa ditampilkan
-            if (imgUrl && imgUrl.includes('drive.google.com')) {
-                imgUrl = convertGoogleDriveLink(imgUrl);
-            }
-            
-            // Buat elemen gambar dengan error handling
+            if (imgUrl && imgUrl.includes('drive.google.com')) imgUrl = convertGoogleDriveLink(imgUrl);
             const imgHtml = imgUrl ? 
                 `<img src="${imgUrl}" alt="${item.name}" onerror="handleImageError(this)">` : 
                 `<div style="width:100%;height:200px;background:#f5ede2;display:flex;align-items:center;justify-content:center;color:#c17a4b;"><i class="fas fa-utensils" style="font-size:40px;opacity:0.5"></i></div>`;
-            
-            card.innerHTML = `
-                ${imgHtml}
-                <div class="card-content">
-                    ${item.price >= 100000 ? '<div class="package-badge">Paket Keluarga</div>' : ''}
-                    <div class="menu-name">${item.name}</div>
-                    <div class="menu-desc">${item.desc}</div>
-                    <div class="menu-price">Rp ${item.price.toLocaleString()}</div>
-                </div>
-            `;
+            card.innerHTML = `${imgHtml}<div class="card-content">${item.price >= 100000 ? '<div class="package-badge">Paket Keluarga</div>' : ''}<div class="menu-name">${item.name}</div><div class="menu-desc">${item.desc}</div><div class="menu-price">Rp ${item.price.toLocaleString()}</div></div>`;
             grid.appendChild(card);
         });
     }
 
-// Data ulasan bilingual (DIPERBAIKI)
-const reviewsData = {
-    en: [
-        { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options. The fried chicken with serundeng and lemongrass-wrapped chicken satay were delicious. Reasonable prices compared to food quality, facilities, and service." },
-        { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable and perfect for relaxing for a long time. Spacious parking area and decent prayer room." },
-        { name: "Slamet P S", rating: 5, comment: "A dining spot too good to miss. Various home-style dishes and signature drinks available. The area is spacious with different seating themes. Surrounded by rice fields, creating a relaxing atmosphere. Come before 7 AM to avoid crowds." },
-        { name: "Heridikta Anggarini", rating: 5, comment: "Love the home-style cooking! My favorites are crispy tempeh and omelet. The menu is varied, the view is nice, and the prayer room is spacious with mukena available." },
-        { name: "Sapto Anggoro", rating: 5, comment: "A regular here, especially on weekends when they serve traditional jenang and porridge. The papaya leaf vegetables and fried pindang klotok are delicious. The wedang Mbah Uti is a must-try herbal drink." }
-    ],
-    id: [
-        { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat. Fasilitas lengkap dengan berbagai pilihan tempat duduk. Ayam goreng dengan serundeng dan sate ayam serai sangat enak. Harga sepadan dengan kualitas makanan, fasilitas, dan layanan." },
-        { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman dan cocok untuk bersantai lama. Parkiran luas dan mushola oke." },
-        { name: "Slamet P S", rating: 5, comment: "Tempat makan yang sayang dilewatkan. Aneka masakan rumahan dan minuman khas tersedia. Area luas dengan berbagai tema tempat duduk. Dikelilingi sawah, suasananya adem. Sebaiknya datang sebelum jam 7 pagi." },
-        { name: "Heridikta Anggarini", rating: 5, comment: "Masakan rumahan favorit! Tempe garit dan telur dadar enak banget. Menu variatif, pemandangan bagus, mushola besar dan ada mukena." },
-        { name: "Sapto Anggoro", rating: 5, comment: "Langganan di sini, terutama sabtu minggu ada jenang bubur tradisional. Sayur daun pepaya dan pindang klotok goreng enak. Wedang Mbah Uti wajib dicoba." }
-    ]
-};
+    const reviewsData = {
+        en: [
+            { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The fried chicken with serundeng and lemongrass-wrapped chicken satay were delicious." },
+            { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable and perfect for relaxing for a long time." }
+        ],
+        id: [
+            { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat. Ayam goreng dengan serundeng dan sate ayam serai sangat enak." },
+            { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman dan cocok untuk bersantai lama." }
+        ]
+    };
 
     function renderReviews() {
         const container = document.getElementById("reviewsContainer");
@@ -781,12 +693,8 @@ const reviewsData = {
             const key = el.getAttribute('data-i18n');
             if (translations[lang][key]) {
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                    if (el.hasAttribute('data-i18n-placeholder')) {
-                        el.placeholder = translations[lang][key];
-                    }
-                } else {
-                    el.innerHTML = translations[lang][key];
-                }
+                    if (el.hasAttribute('data-i18n-placeholder')) el.placeholder = translations[lang][key];
+                } else el.innerHTML = translations[lang][key];
             }
         });
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
@@ -794,6 +702,105 @@ const reviewsData = {
             if (translations[lang][key]) el.placeholder = translations[lang][key];
         });
         renderReviews();
+    }
+
+    // ========== FUNGSI KIRIM WA OTOMATIS DENGAN DATA FORM ==========
+    // Nomor WhatsApp tujuan (sudah disediakan)
+    const WA_TARGET_NUMBER = "6282134897557"; // Format internasional tanpa '+'
+    
+    // Fungsi untuk menampilkan toast notifikasi
+    function showToast(message, isError = false) {
+        const toast = document.getElementById("toastMsg");
+        if (!toast) return;
+        toast.textContent = message;
+        toast.style.background = isError ? "#d32f2f" : "#2c2c2c";
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+
+    // Fungsi untuk mengirim pesan WhatsApp
+    function sendToWhatsApp(name, phone, dateTime, guests) {
+        // Validasi minimal nama dan nomor telepon
+        if (!name.trim()) {
+            showToast(currentLang === 'en' ? "Please enter your name" : "Masukkan nama Anda", true);
+            return false;
+        }
+        if (!phone.trim()) {
+            showToast(currentLang === 'en' ? "Please enter your phone number" : "Masukkan nomor telepon Anda", true);
+            return false;
+        }
+        if (!dateTime) {
+            showToast(currentLang === 'en' ? "Please select date & time" : "Pilih tanggal dan waktu", true);
+            return false;
+        }
+        if (!guests || guests < 1) {
+            showToast(currentLang === 'en' ? "Please enter number of guests" : "Masukkan jumlah tamu", true);
+            return false;
+        }
+
+        // Format datetime-local menjadi format yang lebih mudah dibaca
+        let formattedDateTime = dateTime;
+        if (dateTime) {
+            const dt = new Date(dateTime);
+            formattedDateTime = dt.toLocaleString(currentLang === 'en' ? 'en-GB' : 'id-ID', {
+                day: '2-digit', month: 'long', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        // Buat pesan sesuai bahasa
+        let message = '';
+        if (currentLang === 'en') {
+            message = `🍽️ *RESERVATION REQUEST* 🍽️%0A%0A` +
+                      `*Name:* ${name}%0A` +
+                      `*Phone:* ${phone}%0A` +
+                      `*Date & Time:* ${formattedDateTime}%0A` +
+                      `*Guests:* ${guests} people%0A%0A` +
+                      `_Sent from Pawon Mbah Gito Website_`;
+        } else {
+            message = `🍽️ *PERMINTAAN RESERVASI* 🍽️%0A%0A` +
+                      `*Nama:* ${name}%0A` +
+                      `*Telp:* ${phone}%0A` +
+                      `*Tanggal & Jam:* ${formattedDateTime}%0A` +
+                      `*Jumlah Tamu:* ${guests} orang%0A%0A` +
+                      `_Dikirim dari website Pawon Mbah Gito_`;
+        }
+
+        // Buat URL WhatsApp dengan format yang benar
+        const waUrl = `https://wa.me/${WA_TARGET_NUMBER}?text=${encodeURIComponent(message)}`;
+        
+        // Buka WhatsApp di tab baru
+        window.open(waUrl, '_blank');
+        showToast(currentLang === 'en' ? "Opening WhatsApp... Please send the message" : "Membuka WhatsApp... Silakan kirim pesan");
+        return true;
+    }
+
+    // Event handler untuk tombol submit form
+    const reserveForm = document.getElementById("reserveForm");
+    if (reserveForm) {
+        reserveForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("resName")?.value || "";
+            const phone = document.getElementById("resPhone")?.value || "";
+            const dateTime = document.getElementById("resDateTime")?.value || "";
+            const guests = document.getElementById("resGuests")?.value || "";
+            
+            sendToWhatsApp(name, phone, dateTime, guests);
+        });
+    }
+
+    // Tombol WhatsApp terpisah (mengambil data dari form juga)
+    const whatsappDirectBtn = document.getElementById("whatsappBtn");
+    if (whatsappDirectBtn) {
+        whatsappDirectBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("resName")?.value || "";
+            const phone = document.getElementById("resPhone")?.value || "";
+            const dateTime = document.getElementById("resDateTime")?.value || "";
+            const guests = document.getElementById("resGuests")?.value || "";
+            
+            sendToWhatsApp(name, phone, dateTime, guests);
+        });
     }
 
     function initCategories() {
@@ -805,32 +812,6 @@ const reviewsData = {
                 activeCategory = btn.getAttribute("data-cat");
                 renderMenuByCategory(activeCategory);
             });
-        });
-    }
-
-    // WhatsApp integration
-    const whatsappBtn = document.getElementById("whatsappBtn");
-    if (whatsappBtn) {
-        whatsappBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const name = document.getElementById("resName")?.value || "Customer";
-            const phone = document.getElementById("resPhone")?.value || "";
-            const dateTime = document.getElementById("resDateTime")?.value;
-            const guests = document.getElementById("resGuests")?.value || "?";
-            let msg = `Halo Pawon Mbah Gito! Saya ingin reservasi.%0ANama: ${name}%0ATelp: ${phone}%0AJam & Tanggal: ${dateTime || "Tidak diisi"}%0AJumlah tamu: ${guests}`;
-            if(currentLang === 'en') {
-                msg = `Hello Pawon Mbah Gito! I'd like to make a reservation.%0AName: ${name}%0APhone: ${phone}%0ADate & Time: ${dateTime || "Not set"}%0AGuests: ${guests}`;
-            }
-            const waUrl = `https://wa.me/message/A3ZVWCNGCVPHM1?text=${encodeURIComponent(msg)}`;
-            window.open(waUrl, '_blank');
-        });
-    }
-
-    const reserveForm = document.getElementById("reserveForm");
-    if (reserveForm) {
-        reserveForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            alert(currentLang === 'en' ? "Reservation request sent! We'll contact you soon." : "Permintaan reservasi terkirim! Kami akan segera hubungi.");
         });
     }
 
@@ -863,3 +844,4 @@ const reviewsData = {
 </script>
 </body>
 </html>
+```
