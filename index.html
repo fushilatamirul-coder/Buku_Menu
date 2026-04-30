@@ -761,17 +761,23 @@
         });
     }
 
-    // Data ulasan bilingual
-    const reviewsData = {
-        en: [
-            { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options." },
-            { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable." }
-        ],
-        id: [
-            { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat." },
-            { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman." }
-        ]
-    };
+// Data ulasan bilingual (DIPERBAIKI)
+const reviewsData = {
+    en: [
+        { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options. The fried chicken with serundeng and lemongrass-wrapped chicken satay were delicious. Reasonable prices compared to food quality, facilities, and service." },
+        { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable and perfect for relaxing for a long time. Spacious parking area and decent prayer room." },
+        { name: "Slamet P S", rating: 5, comment: "A dining spot too good to miss. Various home-style dishes and signature drinks available. The area is spacious with different seating themes. Surrounded by rice fields, creating a relaxing atmosphere. Come before 7 AM to avoid crowds." },
+        { name: "Heridikta Anggarini", rating: 5, comment: "Love the home-style cooking! My favorites are crispy tempeh and omelet. The menu is varied, the view is nice, and the prayer room is spacious with mukena available." },
+        { name: "Sapto Anggoro", rating: 5, comment: "A regular here, especially on weekends when they serve traditional jenang and porridge. The papaya leaf vegetables and fried pindang klotok are delicious. The wedang Mbah Uti is a must-try herbal drink." }
+    ],
+    id: [
+        { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat. Fasilitas lengkap dengan berbagai pilihan tempat duduk. Ayam goreng dengan serundeng dan sate ayam serai sangat enak. Harga sepadan dengan kualitas makanan, fasilitas, dan layanan." },
+        { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman dan cocok untuk bersantai lama. Parkiran luas dan mushola oke." },
+        { name: "Slamet P S", rating: 5, comment: "Tempat makan yang sayang dilewatkan. Aneka masakan rumahan dan minuman khas tersedia. Area luas dengan berbagai tema tempat duduk. Dikelilingi sawah, suasananya adem. Sebaiknya datang sebelum jam 7 pagi." },
+        { name: "Heridikta Anggarini", rating: 5, comment: "Masakan rumahan favorit! Tempe garit dan telur dadar enak banget. Menu variatif, pemandangan bagus, mushola besar dan ada mukena." },
+        { name: "Sapto Anggoro", rating: 5, comment: "Langganan di sini, terutama sabtu minggu ada jenang bubur tradisional. Sayur daun pepaya dan pindang klotok goreng enak. Wedang Mbah Uti wajib dicoba." }
+    ]
+};
     
     function renderReviews() {
         const container = document.getElementById("reviewsContainer");
@@ -916,7 +922,7 @@
 
     function getVehicleText(vehicleValue, lang) {
         const vehicleMap = {
-            en: { 'Motor': 'Motorcycle', 'Mobil': 'Car', 'Mobil Mini Bus': 'Mini Bus', 'Bus': 'Bus', 'Tidak Bawa Kendaraan': 'No Vehicle' },
+            en: { 'Motor': 'Motorcycle', 'Mobil': 'Car', 'Mobil Mini Bus': 'Mini Bus', 'Bus Sedang': 'Medium Bus', 'Tidak Bawa Kendaraan': 'No Vehicle' },
             id: { 'Motor': 'Motor', 'Mobil': 'Mobil', 'Mobil Mini Bus': 'Mobil Mini Bus', 'Bus': 'Bus', 'Tidak Bawa Kendaraan': 'Tidak Bawa Kendaraan' }
         };
         return vehicleMap[lang][vehicleValue] || vehicleValue;
