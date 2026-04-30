@@ -246,13 +246,6 @@
             display: block;
         }
 
-        /* Gambar error handler */
-        .menu-card img.error-img {
-            object-fit: contain;
-            padding: 20px;
-            background-color: #f5ede2;
-        }
-
         .card-content {
             padding: 18px;
         }
@@ -447,7 +440,6 @@
             animation: fadeUp 0.5s ease-out;
         }
 
-        /* Toast notification */
         .toast-msg {
             position: fixed;
             bottom: 30px;
@@ -594,19 +586,10 @@
     const menuItems = [
         { id: 1, name: "Wedang Mbah Gito", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling, kayu manis, gula batu & gula aren", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/Y4RXbBKF/Wedang-Mbah-Gito.png" },
         { id: 2, name: "Wedang Mbah Uti", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling & gula batu", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/gbCJ3rSd/Wedang-Mbah-Uti.png" },
-        { id: 3, name: "Beras Kencur", desc: "Kencur tradisional khas Pawon Mbah Gito", price: 18000, category: "wedangan", img: "" },
-        { id: 4, name: "Wedang Jahe", desc: "Jahe asli hangat", price: 17000, category: "wedangan", img: "" },
-        { id: 5, name: "Wedang Sereh", desc: "Sereh segar", price: 9000, category: "wedangan", img: "" },
-        { id: 6, name: "Wedang Jahe Sereh", desc: "Paduan jahe & sereh", price: 18000, category: "wedangan", img: "" },
-        { id: 7, name: "Wedang Susu Jahe", desc: "Jahe dan SKM creamy", price: 18000, category: "wedangan", img: "" },
         { id: 8, name: "Wedang Kenangan (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/LX3w1bbF/Wedang-Kenangan.png" },
         { id: 9, name: "Wedang Temu Kangen (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/spPGVwnc/Wedang-Temu-Kangen.png" },
-        { id: 10, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
-        { id: 13, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
-        { id: 18, name: "Kopi Ndeso", desc: "Kopi tubruk, gula batu/gula cair (Es)", price: 19000, category: "kopi-teh", img: "" },
         { id: 25, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "https://i.ibb.co.com/MkS2n4tQ/Rawon-Iga.png" },
         { id: 26, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "https://i.ibb.co.com/B2KJhrR4/Ayam-Kampung.png" },
-        { id: 39, name: "Bakwan Jagung", desc: "Bakwan jagung renyah", price: 18000, category: "snack", img: "" },
         { id: 53, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "dessert", img: "https://i.ibb.co.com/NdLctrhp/Dawet-Mbah-Uti.png" },
         { id: 54, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "dessert", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" }
     ];
@@ -701,11 +684,9 @@
         renderReviews();
     }
 
-    // ========== FUNGSI KIRIM WA OTOMATIS DENGAN DATA FORM ==========
-    // Nomor WhatsApp tujuan (sudah disediakan)
-    const WA_TARGET_NUMBER = "6282134897557"; // Format internasional tanpa '+'
+    // ========== FUNGSI KIRIM WA DENGAN FORMAT BARU YANG RAPI ==========
+    const WA_TARGET_NUMBER = "6282134897557";
     
-    // Fungsi untuk menampilkan toast notifikasi
     function showToast(message, isError = false) {
         const toast = document.getElementById("toastMsg");
         if (!toast) return;
@@ -715,9 +696,17 @@
         setTimeout(() => toast.classList.remove("show"), 3000);
     }
 
-    // Fungsi untuk mengirim pesan WhatsApp
+    // Fungsi untuk memformat jumlah tamu (plural)
+    function formatGuests(guests, lang) {
+        if (lang === 'en') {
+            return guests + (guests > 1 ? ' People' : ' Person');
+        } else {
+            return guests + ' Orang';
+        }
+    }
+
     function sendToWhatsApp(name, phone, dateTime, guests) {
-        // Validasi minimal nama dan nomor telepon
+        // Validasi
         if (!name.trim()) {
             showToast(currentLang === 'en' ? "Please enter your name" : "Masukkan nama Anda", true);
             return false;
@@ -735,7 +724,7 @@
             return false;
         }
 
-        // Format datetime-local menjadi format yang lebih mudah dibaca
+        // Format datetime
         let formattedDateTime = dateTime;
         if (dateTime) {
             const dt = new Date(dateTime);
@@ -745,34 +734,35 @@
             });
         }
 
-        // Buat pesan sesuai bahasa
+        // Format jumlah tamu
+        const guestText = formatGuests(guests, currentLang);
+        
+        // PESAN DENGAN FORMAT BARU YANG LEBIH RAPI
         let message = '';
         if (currentLang === 'en') {
-            message = `🍽️ *RESERVATION REQUEST* 🍽️%0A%0A` +
-                      `*Name:* ${name}%0A` +
-                      `*Phone:* ${phone}%0A` +
-                      `*Date & Time:* ${formattedDateTime}%0A` +
-                      `*Guests:* ${guests} people%0A%0A` +
-                      `_Sent from Pawon Mbah Gito Website_`;
+            message = `🍽️ *RESERVATION REQUEST* 🍽️\n\n` +
+                      `Name : ${name}\n` +
+                      `Phone : ${phone}\n` +
+                      `Date & Time : ${formattedDateTime}\n` +
+                      `Guest : ${guestText}\n\n` +
+                      `Sent from Pawon Mbah Gito Website`;
         } else {
-            message = `🍽️ *PERMINTAAN RESERVASI* 🍽️%0A%0A` +
-                      `*Nama:* ${name}%0A` +
-                      `*Telp:* ${phone}%0A` +
-                      `*Tanggal & Jam:* ${formattedDateTime}%0A` +
-                      `*Jumlah Tamu:* ${guests} orang%0A%0A` +
-                      `_Dikirim dari website Pawon Mbah Gito_`;
+            message = `🍽️ *PERMINTAAN RESERVASI* 🍽️\n\n` +
+                      `Nama : ${name}\n` +
+                      `Telp : ${phone}\n` +
+                      `Tanggal & Jam : ${formattedDateTime}\n` +
+                      `Jumlah Tamu : ${guestText}\n\n` +
+                      `Dikirim dari website Pawon Mbah Gito`;
         }
 
-        // Buat URL WhatsApp dengan format yang benar
+        // Encode untuk URL
         const waUrl = `https://wa.me/${WA_TARGET_NUMBER}?text=${encodeURIComponent(message)}`;
-        
-        // Buka WhatsApp di tab baru
         window.open(waUrl, '_blank');
         showToast(currentLang === 'en' ? "Opening WhatsApp... Please send the message" : "Membuka WhatsApp... Silakan kirim pesan");
         return true;
     }
 
-    // Event handler untuk tombol submit form
+    // Event handler form
     const reserveForm = document.getElementById("reserveForm");
     if (reserveForm) {
         reserveForm.addEventListener("submit", (e) => {
@@ -781,12 +771,11 @@
             const phone = document.getElementById("resPhone")?.value || "";
             const dateTime = document.getElementById("resDateTime")?.value || "";
             const guests = document.getElementById("resGuests")?.value || "";
-            
             sendToWhatsApp(name, phone, dateTime, guests);
         });
     }
 
-    // Tombol WhatsApp terpisah (mengambil data dari form juga)
+    // Tombol WhatsApp
     const whatsappDirectBtn = document.getElementById("whatsappBtn");
     if (whatsappDirectBtn) {
         whatsappDirectBtn.addEventListener("click", (e) => {
@@ -795,7 +784,6 @@
             const phone = document.getElementById("resPhone")?.value || "";
             const dateTime = document.getElementById("resDateTime")?.value || "";
             const guests = document.getElementById("resGuests")?.value || "";
-            
             sendToWhatsApp(name, phone, dateTime, guests);
         });
     }
@@ -841,4 +829,3 @@
 </script>
 </body>
 </html>
-```
