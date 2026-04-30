@@ -196,7 +196,7 @@
         .category-tabs {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 16px;
             margin-bottom: 40px;
             flex-wrap: wrap;
         }
@@ -204,11 +204,11 @@
         .cat-btn {
             background: #e9dccc;
             border: none;
-            padding: 10px 28px;
+            padding: 8px 20px;
             font-weight: 600;
             border-radius: 40px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: 0.2s;
             color: #4a2f1b;
         }
@@ -320,6 +320,21 @@
             background: #fffaf2;
         }
 
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B5A2B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 16px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
         .whatsapp-btn {
             background: #25D366;
             color: white;
@@ -423,6 +438,14 @@
             .btn-group {
                 gap: 12px;
             }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .cat-btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
         }
         
         @keyframes fadeUp {
@@ -496,10 +519,11 @@
         <div class="category-tabs" id="categoryTabs">
             <button class="cat-btn active" data-cat="all" data-i18n="cat_all">All</button>
             <button class="cat-btn" data-cat="makanan-berat" data-i18n="cat_makanan_berat">Makanan Berat</button>
-            <button class="cat-btn" data-cat="snack" data-i18n="cat_snack">Snack / Cemilan</button>
+            <button class="cat-btn" data-cat="snack" data-i18n="cat_snack">Snack</button>
             <button class="cat-btn" data-cat="wedangan" data-i18n="cat_wedangan">Wedangan</button>
             <button class="cat-btn" data-cat="kopi-teh" data-i18n="cat_kopiteh">Kopi & Teh</button>
-            <button class="cat-btn" data-cat="dessert" data-i18n="cat_dessert">Dessert</button>
+            <button class="cat-btn" data-cat="minuman" data-i18n="cat_minuman">Minuman</button>
+            <button class="cat-btn" data-cat="cake-pastry" data-i18n="cat_cake_pastry">Cake & Pastry</button>
         </div>
         <div class="menu-grid" id="menuGrid"></div>
     </section>
@@ -510,10 +534,42 @@
             <div class="reserve-grid">
                 <div class="form-box">
                     <form id="reserveForm">
-                        <div class="form-group"><input type="text" id="resName" placeholder="Your Name" data-i18n-placeholder="form_name" required></div>
-                        <div class="form-group"><input type="tel" id="resPhone" placeholder="Phone Number" data-i18n-placeholder="form_phone" required></div>
-                        <div class="form-group"><input type="datetime-local" id="resDateTime" required></div>
-                        <div class="form-group"><input type="number" id="resGuests" placeholder="Number of Guests" min="1" data-i18n-placeholder="form_guests" required></div>
+                        <div class="form-group">
+                            <input type="text" id="resName" placeholder="Your Name" data-i18n-placeholder="form_name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="resPhone" placeholder="Phone Number" data-i18n-placeholder="form_phone" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="datetime-local" id="resDateTime" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="number" id="resGuests" placeholder="Number of Guests" min="1" data-i18n-placeholder="form_guests" required>
+                            </div>
+                            <div class="form-group">
+                                <select id="resVehicle" data-i18n-option-vehicle="vehicle_label">
+                                    <option value="" disabled selected data-i18n="vehicle_placeholder">-- Select Vehicle --</option>
+                                    <option value="Motor" data-i18n="vehicle_motor">Motorcycle</option>
+                                    <option value="Mobil" data-i18n="vehicle_car">Car</option>
+                                    <option value="Mobil Mini Bus" data-i18n="vehicle_minibus">Mini Bus</option>
+                                    <option value="Bus" data-i18n="vehicle_bus">Bus</option>
+                                    <option value="Tidak Bawa Kendaraan" data-i18n="vehicle_none">No Vehicle</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <select id="resEvent">
+                                <option value="" disabled selected data-i18n="event_placeholder">-- Select Event Type --</option>
+                                <option value="Makan Keluarga" data-i18n="event_family">Family Dining</option>
+                                <option value="Teman / Sahabat" data-i18n="event_friends">Friends Gathering</option>
+                                <option value="Ulang Tahun" data-i18n="event_birthday">Birthday Party</option>
+                                <option value="Pertemuan Bisnis" data-i18n="event_business">Business Meeting</option>
+                                <option value="Acara Kantor" data-i18n="event_office">Office Event</option>
+                                <option value="Reservasi Biasa" data-i18n="event_normal">Regular Reservation</option>
+                                <option value="Lainnya" data-i18n="event_other">Others</option>
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-primary" style="width:100%;" data-i18n="form_submit">Request Reservation</button>
                     </form>
                     <a id="whatsappBtn" class="whatsapp-btn" href="#" target="_blank"><i class="fab fa-whatsapp"></i> <span data-i18n="wa_btn">Chat via WhatsApp</span></a>
@@ -582,9 +638,8 @@
         }
     }
 
-    // ================= DATA MENU LENGKAP (DIPERBAIKI) =================
+    // ================= DATA MENU =================
     const menuItems = [
-        // WEDANGAN (minuman herbal tradisional)
         { id: 1, name: "Wedang Mbah Gito", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling, kayu manis, gula batu & gula aren", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/Y4RXbBKF/Wedang-Mbah-Gito.png" },
         { id: 2, name: "Wedang Mbah Uti", desc: "Jeruk nipis, jeruk peras, jahe, sereh, cengkeh, kapulaga, kolang-kaling & gula batu", price: 25000, category: "wedangan", img: "https://i.ibb.co.com/gbCJ3rSd/Wedang-Mbah-Uti.png" },
         { id: 3, name: "Beras Kencur", desc: "Kencur tradisional khas Pawon Mbah Gito", price: 18000, category: "wedangan", img: "" },
@@ -595,79 +650,16 @@
         { id: 8, name: "Wedang Kenangan (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/LX3w1bbF/Wedang-Kenangan.png" },
         { id: 9, name: "Wedang Temu Kangen (Sharing)", desc: "Jeruk nipis, sereh, cengkeh, kunyit, jahe, kayu manis, kayu secang, pala", price: 53000, category: "wedangan", img: "https://i.ibb.co.com/spPGVwnc/Wedang-Temu-Kangen.png" },
         { id: 10, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
-        { id: 11, name: "Jeruk Ndeso", desc: "Jeruk peras kuning segar", price: 13000, category: "wedangan", img: "" },
-        { id: 12, name: "Jeruk Nipis Ndeso", desc: "Jeruk nipis asli", price: 13000, category: "wedangan", img: "" },
-        
-        // KOPI & TEH
-        { id: 13, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
-        { id: 14, name: "Teh Tubruk", desc: "Teh kampung asli", price: 15000, category: "kopi-teh", img: "" },
-        { id: 15, name: "Teh Sere", desc: "Teh dengan sereh (Panas 16k / Es 17k)", price: 16000, category: "kopi-teh", img: "" },
-        { id: 16, name: "Teh Jahe", desc: "Teh jahe hangat", price: 16000, category: "kopi-teh", img: "" },
-        { id: 17, name: "Teh Tarik", desc: "Teh tarik panas / es", price: 22000, category: "kopi-teh", img: "" },
-        { id: 18, name: "Kopi Ndeso", desc: "Kopi tubruk, gula batu/gula cair (Es)", price: 19000, category: "kopi-teh", img: "" },
-        { id: 19, name: "Kopi Susu Mbah Gito", desc: "Kopi tubruk, SKM, gula aren", price: 20000, category: "kopi-teh", img: "" },
-        { id: 20, name: "Kopi Susu Ndeso", desc: "Kopi tubruk, SKM, gula batu", price: 20000, category: "kopi-teh", img: "" },
-        { id: 21, name: "Vanilla Latte", desc: "Smooth vanilla latte", price: 32000, category: "kopi-teh", img: "" },
-        { id: 22, name: "Caramel Macchiato", desc: "Caramel macchiato", price: 32000, category: "kopi-teh", img: "" },
-        { id: 23, name: "Vietnam Drip", desc: "Vietnam drip coffee", price: 28000, category: "kopi-teh", img: "" },
-        { id: 24, name: "V60 Manual Brew", desc: "Pilihan Beans: Aceh Gayo, Halu Banana, Flores Bajawa, Bali, Merapi, Semendo", price: 27000, category: "kopi-teh", img: "" },
-  
-        // DESSERT & MINUMAN MANIS
-        { id: 25, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "dessert", img: "https://i.ibb.co.com/NdLctrhp/Dawet-Mbah-Uti.png" },
-        { id: 26, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "dessert", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" },
-        { id: 27, name: "Teh Leci", desc: "Teh segar dengan leci", price: 25000, category: "dessert", img: "" },
-        { id: 28, name: "Roembulan", desc: "Minuman segar spesial", price: 26000, category: "dessert", img: "https://i.ibb.co.com/Z6qhxryj/Rembulan.png" },
-        { id: 29, name: "Telang Fresh", desc: "Bunga Telang, Jeruk Nipis", price: 27000, category: "dessert", img: "" },
-        { id: 30, name: "Klepon Eco", desc: "Klepon, Gula aren, Fresh Milk", price: 29000, category: "dessert", img: "https://i.ibb.co.com/YwBG3Vv/Klepon.png" },
-        { id: 31, name: "Matcha", desc: "Matcha, Fresh Milk", price: 31000, category: "dessert", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
-        { id: 32, name: "Blend Cookies", desc: "Cookies dan Fresh Milk", price: 32000, category: "dessert", img: "" },
-        { id: 33, name: "Signature Coklat", desc: "Coklat, Es Krim Vanilla dan Fresh Milk", price: 34000, category: "dessert", img: "" },
-
-        // MAKANAN BERAT
-        { id: 34, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "https://i.ibb.co.com/MkS2n4tQ/Rawon-Iga.png" },
-        { id: 35, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "https://i.ibb.co.com/B2KJhrR4/Ayam-Kampung.png" },
-        { id: 36, name: "Ayam Bakar Simbah", desc: "Nasi Putih, Ayam kampung, Lalapan, Oseng sayur, Sambal bawang", price: 55000, category: "makanan-berat", img: "" },
-        { id: 37, name: "Wagyu Slice Sambal Matah", desc: "Nasi putih, Daging Wagyu, Oseng Sayur, Telur Ceplok, Sambal", price: 57000, category: "makanan-berat", img: "" },
-        { id: 38, name: "Sop Ayam Kampung Ndeso", desc: "Ayam Kampung, Wortel, Kembang kol, Makaroni, Jamur, Keripik Kentang", price: 48000, category: "makanan-berat", img: "" },
-        { id: 39, name: "Bakmi Jowo Godog", desc: "Bakmi, Ayam Merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
-        { id: 40, name: "Bakmi Jowo Goreng", desc: "Bakmi goreng dengan ayam merah, telur bebek", price: 33000, category: "makanan-berat", img: "" },
-        { id: 41, name: "Mie Lethek Godhog/Goreng", desc: "Ayam merah, Kol, Telur Bebek, Acar, Kerupuk Udang", price: 33000, category: "makanan-berat", img: "" },
-        { id: 42, name: "Kwetiauw Goreng", desc: "Bakso Ikan, Potongan Ayam, Sayuran, Telur, Kerupuk Udang", price: 34000, category: "makanan-berat", img: "https://i.ibb.co.com/PX52Yt8/Kwetiau-Goreng.png" },
-        { id: 43, name: "Nasi Goreng Kampung", desc: "Nasi Putih, Potongan Ayam, Telur, Telur Ceplok, Kerupuk Udang", price: 32000, category: "makanan-berat", img: "" },
-        { id: 44, name: "Nasi Goreng Bebek Cabe Ijo", desc: "Nasi putih, bebek suwir, telur ceplok", price: 36000, category: "makanan-berat", img: "" },
-        { id: 45, name: "Bebek Sambel Tempong", desc: "Nasi Putih, Bebek Goreng, Tempe Goreng, Sambel Tempong & Matah", price: 44000, category: "makanan-berat", img: "" },
-        { id: 46, name: "Grilled Chicken", desc: "Ayam Panggang, Kentang, Mushroom Sauce, Sayuran", price: 53000, category: "makanan-berat", img: "" },
-        { id: 47, name: "Mbah Gito Jenang", desc: "Kuliner Tradisional dengan cita rasa khas Pawon Mbah Gito", price: 13000, category: "makanan-berat", img: "" },
-        
-        // SNACK / CEMILAN
-        { id: 48, name: "Bakwan Jagung", desc: "Bakwan jagung renyah", price: 18000, category: "snack", img: "" },
-        { id: 49, name: "Tahu Tuna", desc: "Tahu isi tuna", price: 24000, category: "snack", img: "" },
-        { id: 50, name: "Pisang Goreng", desc: "Pisang goreng tradisional", price: 18000, category: "snack", img: "" },
-        { id: 51, name: "Mendoan", desc: "Tempe mendoan khas", price: 17000, category: "snack", img: "" },
-        { id: 52, name: "Pisang Bakar Coklat Keju", desc: "Pisang bakar topping coklat keju", price: 21000, category: "snack", img: "" },
-        { id: 53, name: "Pisang Bakar Ori", desc: "Pisang bakar original", price: 16000, category: "snack", img: "" },
-        { id: 54, name: "Roti Bakar Hazelnut", desc: "Roti bakar hazelnut", price: 35000, category: "snack", img: "" },
-        { id: 55, name: "Roti Bakar Coklat Keju", desc: "Roti bakar coklat keju", price: 35000, category: "snack", img: "" },
-        { id: 56, name: "Dimsum", desc: "Dimsum ayam pilihan", price: 26000, category: "snack", img: "" },
-        { id: 57, name: "Spring Roll", desc: "Lumpia gurih", price: 24000, category: "snack", img: "" },
-        { id: 58, name: "French Fries", desc: "Kentang goreng crispy", price: 21000, category: "snack", img: "" },
-        { id: 59, name: "Donat", desc: "Topping gula halus", price: 32000, category: "snack", img: "" },
-        { id: 60, name: "Telo Mekrok", desc: "Ubi jalar goreng", price: 17000, category: "snack", img: "" },
-        { id: 61, name: "Ubi Lumer", desc: "Ubi lembut", price: 16000, category: "snack", img: "" },
-        
-        // CAKE & PASTRY (DESSERT)
-        { id: 62, name: "Red Velvet Cheese Cake", desc: "Red velvet lembut berpadu dengan keju", price: 40000, category: "dessert", img: "" },
-        { id: 63, name: "Choco Truffle Cake", desc: "Cake coklat truffle", price: 38000, category: "dessert", img: "" },
-        { id: 64, name: "Red Velvet Cake", desc: "Red velvet lembut", price: 39000, category: "dessert", img: "" },
-        { id: 65, name: "Burnt Cheese Cake", desc: "Cheese Cake burnt style", price: 47000, category: "dessert", img: "" },
-        { id: 66, name: "Blueberry Cheese Cake", desc: "Blueberry lembut berpadu dengan lembutnya keju", price: 48000, category: "dessert", img: "" },
-        { id: 67, name: "Tiramisu", desc: "Tiramisu yang lembut dan manis", price: 40000, category: "dessert", img: "https://i.ibb.co.com/YwBG3Vv/Klepon.png" },
-        { id: 68, name: "Chocolate Cheese Cake", desc: "Cokelat lembut dan keju lumer", price: 40000, category: "dessert", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
-        { id: 69, name: "Strawberry Cheese Cake", desc: "Strawberry dan keju berpadu", price: 38000, category: "dessert", img: "" },
-        { id: 70, name: "All Croisant", desc: "Renyah di bagian luar dan toping yang beragam", price: 33000, category: "dessert", img: "" },
-        { id: 71, name: "Mochacino", desc: "Mochacino yang lembut", price: 34000, category: "dessert", img: "" },
-        { id: 72, name: "Rainbow Cake", desc: "cantik Warna warni cake yang lembut", price: 39000, category: "dessert", img: "" },
-        { id: 73, name: "All Macaron", desc: "Cruncy diluar lembut di dalam", price: 21000, category: "dessert", img: "" }
+        { id: 11, name: "Teh Ndeso", desc: "Teh dan jeruk nipis (Panas 11k / Es 10k)", price: 11000, category: "kopi-teh", img: "" },
+        { id: 12, name: "Kopi Ndeso", desc: "Kopi tubruk, gula batu/gula cair (Es)", price: 19000, category: "kopi-teh", img: "" },
+        { id: 13, name: "Rawon Iga", desc: "Nasi, Iga tulang mix daging, Telur Asin, Tauge, Sambal, Kerupuk Udang", price: 63000, category: "makanan-berat", img: "https://i.ibb.co.com/MkS2n4tQ/Rawon-Iga.png" },
+        { id: 14, name: "Ayam Kampung Tepi Sawah", desc: "Nasi daun jeruk, Lalapan, Sambal Bawang, daun singkong", price: 54000, category: "makanan-berat", img: "https://i.ibb.co.com/B2KJhrR4/Ayam-Kampung.png" },
+        { id: 15, name: "Mbah Uti Dawet", desc: "Cendol, Gula Dawet, Creamer", price: 23000, category: "minuman", img: "https://i.ibb.co.com/NdLctrhp/Dawet-Mbah-Uti.png" },
+        { id: 16, name: "Es Teler", desc: "Nangka, Alpukat, Nata de coco, Susu, Creamer", price: 40000, category: "minuman", img: "https://i.ibb.co.com/35v2x8Lp/Es-Teler.png" },
+        { id: 17, name: "Matcha", desc: "Matcha, Fresh Milk", price: 31000, category: "minuman", img: "https://i.ibb.co.com/HL4tf83n/Matcha-Ice.png" },
+        { id: 18, name: "Red Velvet Cheese Cake", desc: "Red velvet lembut berpadu dengan keju", price: 40000, category: "cake-pastry", img: "" },
+        { id: 19, name: "Choco Truffle Cake", desc: "Cake coklat truffle", price: 38000, category: "cake-pastry", img: "" },
+        { id: 20, name: "Burnt Cheese Cake", desc: "Cheese Cake burnt style", price: 47000, category: "cake-pastry", img: "" }
     ];
 
     let activeCategory = "all";
@@ -692,7 +684,7 @@
             const imgHtml = imgUrl ? 
                 `<img src="${imgUrl}" alt="${item.name}" onerror="handleImageError(this)">` : 
                 `<div style="width:100%;height:200px;background:#f5ede2;display:flex;align-items:center;justify-content:center;color:#c17a4b;"><i class="fas fa-utensils" style="font-size:40px;opacity:0.5"></i></div>`;
-            card.innerHTML = `${imgHtml}<div class="card-content">${item.price >= 100000 ? '<div class="package-badge">Paket Keluarga</div>' : ''}<div class="menu-name">${item.name}</div><div class="menu-desc">${item.desc}</div><div class="menu-price">Rp ${item.price.toLocaleString()}</div></div>`;
+            card.innerHTML = `${imgHtml}<div class="card-content"><div class="menu-name">${item.name}</div><div class="menu-desc">${item.desc}</div><div class="menu-price">Rp ${item.price.toLocaleString()}</div></div>`;
             grid.appendChild(card);
         });
     }
@@ -700,18 +692,12 @@
     // Data ulasan bilingual
     const reviewsData = {
         en: [
-            { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options. The fried chicken with serundeng and lemongrass-wrapped chicken satay were delicious. Reasonable prices compared to food quality, facilities, and service." },
-            { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable and perfect for relaxing for a long time. Spacious parking area and decent prayer room." },
-            { name: "Slamet P S", rating: 5, comment: "A dining spot too good to miss. Various home-style dishes and signature drinks available. The area is spacious with different seating themes. Surrounded by rice fields, creating a relaxing atmosphere. Come before 7 AM to avoid crowds." },
-            { name: "Heridikta Anggarini", rating: 5, comment: "Love the home-style cooking! My favorites are crispy tempeh and omelet. The menu is varied, the view is nice, and the prayer room is spacious with mukena available." },
-            { name: "Sapto Anggoro", rating: 5, comment: "A regular here, especially on weekends when they serve traditional jenang and porridge. The papaya leaf vegetables and fried pindang klotok are delicious. The wedang Mbah Uti is a must-try herbal drink." }
+            { name: "Ricky", rating: 5, comment: "A comfortable place for Javanese traditional food with a strong local atmosphere. The facilities are complete with various seating options." },
+            { name: "Mohd Rhedo Margen", rating: 5, comment: "The food was good for my taste. Service was fast and friendly. The place is comfortable." }
         ],
         id: [
-            { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat. Fasilitas lengkap dengan berbagai pilihan tempat duduk. Ayam goreng dengan serundeng dan sate ayam serai sangat enak. Harga sepadan dengan kualitas makanan, fasilitas, dan layanan." },
-            { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman dan cocok untuk bersantai lama. Parkiran luas dan mushola oke." },
-            { name: "Slamet P S", rating: 5, comment: "Tempat makan yang sayang dilewatkan. Aneka masakan rumahan dan minuman khas tersedia. Area luas dengan berbagai tema tempat duduk. Dikelilingi sawah, suasananya adem. Sebaiknya datang sebelum jam 7 pagi." },
-            { name: "Heridikta Anggarini", rating: 5, comment: "Masakan rumahan favorit! Tempe garit dan telur dadar enak banget. Menu variatif, pemandangan bagus, mushola besar dan ada mukena." },
-            { name: "Sapto Anggoro", rating: 5, comment: "Langganan di sini, terutama sabtu minggu ada jenang bubur tradisional. Sayur daun pepaya dan pindang klotok goreng enak. Wedang Mbah Uti wajib dicoba." }
+            { name: "Ricky", rating: 5, comment: "Tempat yang nyaman untuk menikmati makanan tradisional Jawa dengan suasana lokal yang kuat." },
+            { name: "Mohd Rhedo Margen", rating: 5, comment: "Makanan enak sesuai selera. Pelayanan cepat dan ramah. Tempat nyaman." }
         ]
     };
     
@@ -729,31 +715,41 @@
         });
     }
 
-    // Terjemahan
+    // Terjemahan dengan field baru
     const translations = {
         en: {
             nav_home: "Home", nav_menu: "Menu", nav_reserve: "Reserve", nav_reviews: "Reviews",
             hero_title: "Traditional Restaurant<br>Homeland Flavors",
-            hero_desc: "Pawon Mbah Gito is a home to return to—a place to relive childhood memories at grandmother's house, peaceful and serene, filled with warmth and affection.",
+            hero_desc: "Pawon Mbah Gito is a home to return to—a place to relive childhood memories at grandmother's house.",
             hero_btn_menu: "View Menu", hero_btn_reserve: "Reserve Now",
             menu_title: "Our Signature Menu", cat_all: "All", cat_wedangan: "Wedangan", cat_kopiteh: "Coffee & Tea", 
-            cat_makanan_berat: "Heavy Meals", cat_snack: "Snacks", cat_dessert: "Dessert",
+            cat_makanan_berat: "Main Course", cat_snack: "Snacks", cat_minuman: "Beverages", cat_cake_pastry: "Cake & Pastry",
             reserve_title: "Reserve a Table", form_name: "Your Name", form_phone: "Phone Number", 
             form_guests: "Number of Guests", form_submit: "Request Reservation",
             wa_btn: "Chat via WhatsApp", hours_title: "Opening Hours", location_title: "Address",
-            reviews_title: "Customer Reviews", open_map: "📍 Open Google Maps for directions →"
+            reviews_title: "Customer Reviews", open_map: "📍 Open Google Maps for directions →",
+            vehicle_placeholder: "-- Select Vehicle --", vehicle_motor: "Motorcycle", vehicle_car: "Car",
+            vehicle_minibus: "Mini Bus", vehicle_bus: "Bus", vehicle_none: "No Vehicle",
+            event_placeholder: "-- Select Event Type --", event_family: "Family Dining", event_friends: "Friends Gathering",
+            event_birthday: "Birthday Party", event_business: "Business Meeting", event_office: "Office Event",
+            event_normal: "Regular Reservation", event_other: "Others"
         },
         id: {
             nav_home: "Beranda", nav_menu: "Menu", nav_reserve: "Pesan", nav_reviews: "Ulasan",
             hero_title: "Resto Ndeso<br>Rasa Kampung Halaman",
-            hero_desc: "Pawon Mbah Gito adalah rumah untuk pulang, mengulang kembali memori masa kecil dirumah si mbah yang ayem tentrem penuh kehangatan & kasih sayang.",
+            hero_desc: "Pawon Mbah Gito adalah rumah untuk pulang, mengulang kembali memori masa kecil dirumah si mbah yang ayem tentrem.",
             hero_btn_menu: "Lihat Menu", hero_btn_reserve: "Pesan Sekarang",
             menu_title: "Menu Andalan Kami", cat_all: "Semua", cat_wedangan: "Wedangan", cat_kopiteh: "Kopi & Teh",
-            cat_makanan_berat: "Makanan Berat", cat_snack: "Snack / Cemilan", cat_dessert: "Dessert",
+            cat_makanan_berat: "Makanan Berat", cat_snack: "Snack", cat_minuman: "Minuman", cat_cake_pastry: "Cake & Pastry",
             reserve_title: "Pesan Meja", form_name: "Nama Anda", form_phone: "Nomor Telepon",
             form_guests: "Jumlah Tamu", form_submit: "Kirim Permintaan",
             wa_btn: "Chat via WhatsApp", hours_title: "Jam Buka", location_title: "Alamat",
-            reviews_title: "Ulasan Pelanggan", open_map: "📍 Buka Google Maps untuk petunjuk arah →"
+            reviews_title: "Ulasan Pelanggan", open_map: "📍 Buka Google Maps untuk petunjuk arah →",
+            vehicle_placeholder: "-- Pilih Kendaraan --", vehicle_motor: "Motor", vehicle_car: "Mobil",
+            vehicle_minibus: "Mobil Mini Bus", vehicle_bus: "Bus", vehicle_none: "Tidak Bawa Kendaraan",
+            event_placeholder: "-- Pilih Jenis Acara --", event_family: "Makan Keluarga", event_friends: "Teman / Sahabat",
+            event_birthday: "Ulang Tahun", event_business: "Pertemuan Bisnis", event_office: "Acara Kantor",
+            event_normal: "Reservasi Biasa", event_other: "Lainnya"
         }
     };
 
@@ -764,17 +760,69 @@
             if (translations[lang] && translations[lang][key]) {
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     if (el.hasAttribute('data-i18n-placeholder')) el.placeholder = translations[lang][key];
-                } else el.innerHTML = translations[lang][key];
+                } else if (el.tagName === 'SELECT') {
+                    // Untuk select, kita update option-nya nanti terpisah
+                } else {
+                    el.innerHTML = translations[lang][key];
+                }
             }
         });
+        
+        // Update placeholder untuk select
+        const vehicleSelect = document.getElementById("resVehicle");
+        const eventSelect = document.getElementById("resEvent");
+        
+        if (vehicleSelect) {
+            const options = vehicleSelect.options;
+            for (let i = 0; i < options.length; i++) {
+                const opt = options[i];
+                const i18nKey = opt.getAttribute('data-i18n');
+                if (i18nKey && translations[lang][i18nKey]) {
+                    opt.textContent = translations[lang][i18nKey];
+                }
+            }
+        }
+        
+        if (eventSelect) {
+            const options = eventSelect.options;
+            for (let i = 0; i < options.length; i++) {
+                const opt = options[i];
+                const i18nKey = opt.getAttribute('data-i18n');
+                if (i18nKey && translations[lang][i18nKey]) {
+                    opt.textContent = translations[lang][i18nKey];
+                }
+            }
+        }
+        
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
             const key = el.getAttribute('data-i18n-placeholder');
             if (translations[lang] && translations[lang][key]) el.placeholder = translations[lang][key];
         });
+        
+        // Update category button texts
+        const catBtns = document.querySelectorAll('.cat-btn');
+        catBtns.forEach(btn => {
+            const catKey = btn.getAttribute('data-cat');
+            let i18nKey = '';
+            switch(catKey) {
+                case 'all': i18nKey = 'cat_all'; break;
+                case 'makanan-berat': i18nKey = 'cat_makanan_berat'; break;
+                case 'snack': i18nKey = 'cat_snack'; break;
+                case 'wedangan': i18nKey = 'cat_wedangan'; break;
+                case 'kopi-teh': i18nKey = 'cat_kopiteh'; break;
+                case 'minuman': i18nKey = 'cat_minuman'; break;
+                case 'cake-pastry': i18nKey = 'cat_cake_pastry'; break;
+                default: i18nKey = '';
+            }
+            if (i18nKey && translations[lang][i18nKey]) {
+                btn.innerHTML = translations[lang][i18nKey];
+            }
+        });
+        
         renderReviews();
     }
 
-    // ========== FUNGSI KIRIM WA DENGAN FORMAT RAPI ==========
+    // ========== FUNGSI KIRIM WA DENGAN FIELD BARU ==========
     const WA_TARGET_NUMBER = "6282134897557";
     
     function showToast(message, isError = false) {
@@ -794,7 +842,28 @@
         }
     }
 
-    function sendToWhatsApp(name, phone, dateTime, guests) {
+    function getVehicleText(vehicleValue, lang) {
+        const vehicleMap = {
+            en: { 'Motor': 'Motorcycle', 'Mobil': 'Car', 'Mobil Mini Bus': 'Mini Bus', 'Bus': 'Bus', 'Tidak Bawa Kendaraan': 'No Vehicle' },
+            id: { 'Motor': 'Motor', 'Mobil': 'Mobil', 'Mobil Mini Bus': 'Mobil Mini Bus', 'Bus': 'Bus', 'Tidak Bawa Kendaraan': 'Tidak Bawa Kendaraan' }
+        };
+        return vehicleMap[lang][vehicleValue] || vehicleValue;
+    }
+
+    function getEventText(eventValue, lang) {
+        const eventMap = {
+            en: { 'Makan Keluarga': 'Family Dining', 'Teman / Sahabat': 'Friends Gathering', 'Ulang Tahun': 'Birthday Party', 
+                  'Pertemuan Bisnis': 'Business Meeting', 'Acara Kantor': 'Office Event', 'Reservasi Biasa': 'Regular Reservation', 
+                  'Lainnya': 'Others' },
+            id: { 'Makan Keluarga': 'Makan Keluarga', 'Teman / Sahabat': 'Teman / Sahabat', 'Ulang Tahun': 'Ulang Tahun',
+                  'Pertemuan Bisnis': 'Pertemuan Bisnis', 'Acara Kantor': 'Acara Kantor', 'Reservasi Biasa': 'Reservasi Biasa',
+                  'Lainnya': 'Lainnya' }
+        };
+        return eventMap[lang][eventValue] || eventValue;
+    }
+
+    function sendToWhatsApp(name, phone, dateTime, guests, vehicle, eventType) {
+        // Validasi
         if (!name.trim()) {
             showToast(currentLang === 'en' ? "Please enter your name" : "Masukkan nama Anda", true);
             return false;
@@ -812,6 +881,7 @@
             return false;
         }
 
+        // Format datetime
         let formattedDateTime = dateTime;
         if (dateTime) {
             const dt = new Date(dateTime);
@@ -822,21 +892,28 @@
         }
 
         const guestText = formatGuests(guests, currentLang);
+        const vehicleText = vehicle ? getVehicleText(vehicle, currentLang) : (currentLang === 'en' ? 'Not specified' : 'Tidak diisi');
+        const eventText = eventType ? getEventText(eventType, currentLang) : (currentLang === 'en' ? 'Not specified' : 'Tidak diisi');
         
+        // PESAN DENGAN FORMAT BARU + FIELD KENDARAAN & ACARA
         let message = '';
         if (currentLang === 'en') {
             message = `🍽️ *RESERVATION REQUEST* 🍽️\n\n` +
                       `Name : ${name}\n` +
                       `Phone : ${phone}\n` +
                       `Date & Time : ${formattedDateTime}\n` +
-                      `Guest : ${guestText}\n\n` +
+                      `Guest : ${guestText}\n` +
+                      `Vehicle : ${vehicleText}\n` +
+                      `Event : ${eventText}\n\n` +
                       `Sent from Pawon Mbah Gito Website`;
         } else {
             message = `🍽️ *PERMINTAAN RESERVASI* 🍽️\n\n` +
                       `Nama : ${name}\n` +
                       `Telp : ${phone}\n` +
                       `Tanggal & Jam : ${formattedDateTime}\n` +
-                      `Jumlah Tamu : ${guestText}\n\n` +
+                      `Jumlah Tamu : ${guestText}\n` +
+                      `Kendaraan : ${vehicleText}\n` +
+                      `Acara : ${eventText}\n\n` +
                       `Dikirim dari website Pawon Mbah Gito`;
         }
 
@@ -846,7 +923,7 @@
         return true;
     }
 
-    // Event handler form
+    // Event handler form dengan field baru
     const reserveForm = document.getElementById("reserveForm");
     if (reserveForm) {
         reserveForm.addEventListener("submit", (e) => {
@@ -855,7 +932,9 @@
             const phone = document.getElementById("resPhone")?.value || "";
             const dateTime = document.getElementById("resDateTime")?.value || "";
             const guests = document.getElementById("resGuests")?.value || "";
-            sendToWhatsApp(name, phone, dateTime, guests);
+            const vehicle = document.getElementById("resVehicle")?.value || "";
+            const eventType = document.getElementById("resEvent")?.value || "";
+            sendToWhatsApp(name, phone, dateTime, guests, vehicle, eventType);
         });
     }
 
@@ -868,7 +947,9 @@
             const phone = document.getElementById("resPhone")?.value || "";
             const dateTime = document.getElementById("resDateTime")?.value || "";
             const guests = document.getElementById("resGuests")?.value || "";
-            sendToWhatsApp(name, phone, dateTime, guests);
+            const vehicle = document.getElementById("resVehicle")?.value || "";
+            const eventType = document.getElementById("resEvent")?.value || "";
+            sendToWhatsApp(name, phone, dateTime, guests, vehicle, eventType);
         });
     }
 
