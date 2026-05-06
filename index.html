@@ -112,7 +112,7 @@
             background: var(--terracotta);
         }
 
-        /* HERO SECTION - Perfect background with overlay */
+        /* HERO SECTION - Background diatur via JS (seperti menu) */
         .hero {
             position: relative;
             min-height: 85vh;
@@ -120,7 +120,6 @@
             align-items: center;
             text-align: center;
             color: white;
-            background-image: url('https://i.ibb.co.com/LhRk6cyd/Background-Web.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -653,6 +652,10 @@
 <div id="toastMsg" class="toast-msg"></div>
 
 <script>
+    // ================= KONFIGURASI GAMBAR BACKGROUND HEADER (seperti menu) =================
+    // Ganti URL di bawah ini untuk mengubah gambar background Hero Section
+    const headerBackgroundImage = 'https://i.ibb.co.com/LhRk6cyd/Background-Web.png';
+    
     // ================= FUNGSI KONVERSI GOOGLE DRIVE LINK =================
     function convertGoogleDriveLink(url) {
         if (!url || url === "") return "";
@@ -1043,6 +1046,11 @@
     });
 
     function init() {
+        // Set background header dari variabel (seperti gambar menu)
+        const heroSection = document.querySelector('.hero');
+        if (heroSection && headerBackgroundImage) {
+            heroSection.style.backgroundImage = `url('${headerBackgroundImage}')`;
+        }
         setLanguage('en');
         renderMenuByCategory('all');
         renderReviews();
@@ -1052,3 +1060,4 @@
 </script>
 </body>
 </html>
+```
